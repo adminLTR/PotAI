@@ -1,0 +1,26 @@
+:root{
+    --primary: rgb(134, 172, 202);
+    --secondary: rgb(76, 98, 115);
+    --auxiliar: rgb(145, 193, 168);
+    --amarillo: rgb(254, 199, 134);
+}
+
+*{
+    background-color: var(--primary);
+}
+
+.bg-primary-1{
+    background-color: var(--primary);
+}
+
+.bg-secondary-1{
+    background-color: var(--secondary);
+}
+
+.bg-auxiliar-1{
+    background-color: var(--auxiliar);
+}
+
+.bg-amarillo-1{
+    background-color: var(--amarillo);
+}
