@@ -20,4 +20,4 @@ class RiegoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Riego
         fields = '__all__'
-        
+

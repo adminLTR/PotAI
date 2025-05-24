@@ -48,3 +48,4 @@ class PlacaViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
+
