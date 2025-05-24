@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import *
+from .models import *
 
 class TipoPlantaSerializer(serializers.ModelSerializer):
     class Meta:
