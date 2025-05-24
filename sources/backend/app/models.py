@@ -14,26 +14,15 @@ class TipoPlanta(models.Model):
         db_table = "TipoPlanta"
 
 
-#Placa
-class Placa(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre
-    
-    class Meta:
-        verbose_name = "Placa"
-        verbose_name_plural = "Placas"
-        db_table = "Placa"
-
 
 #Planta
 class Planta(models.Model):
-    tipo = models.ForeignKey(TipoPlanta, on_delete=models.CASCADE)
-    id_placa = models.ForeignKey(Placa, on_delete=models.CASCADE)
+    tipo = models.ForeignKey(TipoPlanta, on_delete=models.CASCADE, verbose_name="Tipo de planta")
+    codigo_placa = models.CharField(max_length=10, verbose_name="Código de placa", blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nombre
+        return self.tipo.nombre
     
     class Meta:
         verbose_name = "Planta"
@@ -43,14 +32,14 @@ class Planta(models.Model):
 
 #Riego
 class Riego(models.Model):
-    temperatura = models.DecimalField(max_digits=6, decimal_places=2)
+    temperatura = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Temperatura (°C)")
     humedad = models.DecimalField(max_digits=6, decimal_places=2)
-    luz_intencidad = models.DecimalField(max_digits=6, decimal_places=2)
+    #luz_intencidad = models.DecimalField(max_digits=6, decimal_places=2)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    id_planta = models.ForeignKey(Planta, on_delete=models.CASCADE)
+    id_planta = models.ForeignKey(Planta, on_delete=models.CASCADE, verbose_name="Planta")
 
     def __str__(self):
-        return self.nombre
+        return self.fecha_creacion + " | " + self.id_planta.tipo.nombre
     
     class Meta:
         verbose_name = "Riego"

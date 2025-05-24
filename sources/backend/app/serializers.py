@@ -11,10 +11,6 @@ class PlantaSerializer(serializers.ModelSerializer):
         model = Planta
         fields = '__all__'
 
-class PlacaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Placa
-        fields = '__all__'
 
 class RiegoSerializer(serializers.ModelSerializer):
     class Meta:

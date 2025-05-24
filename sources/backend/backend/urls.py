@@ -28,7 +28,6 @@ from app import views as views_app
 router.register(r'tipos_planta', views_app.TipoPlantaViewSet)
 router.register(r'plantas', views_app.PlantaViewSet)
 router.register(r'riegos', views_app.RiegoViewSet)
-router.register(r'placas', views_app.PlacaViewSet)
 
 
 urlpatterns = [

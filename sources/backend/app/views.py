@@ -11,6 +11,7 @@ class TipoPlantaViewSet(viewsets.ModelViewSet):
     """
     queryset = TipoPlanta.objects.all()
     serializer_class = TipoPlantaSerializer
+    filterset_fields = '__all__'
     
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
@@ -22,6 +23,7 @@ class PlantaViewSet(viewsets.ModelViewSet):
     """
     queryset = Planta.objects.all()
     serializer_class = PlantaSerializer
+    filterset_fields = '__all__'
     
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
@@ -33,17 +35,7 @@ class RiegoViewSet(viewsets.ModelViewSet):
     """
     queryset = Riego.objects.all()
     serializer_class = RiegoSerializer
-    
-    def get_permissions(self):
-        permission_classes = [permissions.AllowAny]
-        return [permission() for permission in permission_classes]
-
-class PlacaViewSet(viewsets.ModelViewSet):
-    """
-    API Endpoint para CRUD de Placa.
-    """
-    queryset = Placa.objects.all()
-    serializer_class = PlacaSerializer
+    filterset_fields = '__all__'
     
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
