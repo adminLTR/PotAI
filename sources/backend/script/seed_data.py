@@ -24,7 +24,7 @@ planta8 = TipoPlanta.objects .create(nombre="rosa china")
 print("Datos iniciales ingresados correctamente")
 
 
-Planta.objects.all().delete()
-Riego.objects.all().delete()
+#Planta.objects.all().delete()
+#Riego.objects.all().delete()
 
 

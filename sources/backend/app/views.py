@@ -5,6 +5,7 @@ from .serializers import *
 from .models import *
 from rest_framework.permissions import AllowAny
 
+
 class TipoPlantaViewSet(viewsets.ModelViewSet):
     """
     API Endpoint para CRUD de TipoPlanta.

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     "app"
 ]
 
@@ -75,7 +76,24 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
 
+'''
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+'''
+# Si no se tiene Redis, se puede usar in-memory (solo para desarrollo)
+CHANNEL_LAYERS = {
+     'default': {
+         'BACKEND': 'channels.layers.InMemoryChannelLayer'
+     }
+ }
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

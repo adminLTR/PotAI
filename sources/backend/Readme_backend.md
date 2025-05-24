@@ -44,3 +44,10 @@ Luego, ejecutamos el comando:
 
     \l
 El cual nos mostrará la lista de bases de datos, si en ella sale la base de datos que acabamos de crear, significa que todo salió correctamente.
+
+## 3. Sockets:
+Ubicar la consola CMD en la ubicación del backend y correr el siguiente comando:
+
+    uvicorn backend.asgi:application --host 0.0.0.0 --port 8000 --reload
+
+
