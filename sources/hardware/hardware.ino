@@ -1,9 +1,12 @@
-#include <DHT.h>
+#include "Dht11.h"
+#include "MoistureSoil.h"
 
-#define DHTPIN 4         // Pin conectado al DATA del DHT11
-#define DHTTYPE DHT11    // Modelo de sensor
+#define DHTPIN 4 
+#define MOISTUREPIN 34
 
-DHT dht(DHTPIN, DHTTYPE);
+Dht11 dht(DHTPIN);
+MoistureSoil ms_sensor(MOISTUREPIN);
+String codESP32 = "ESP32LT"
 
 void setup() {
   Serial.begin(115200);
@@ -11,19 +14,13 @@ void setup() {
 }
 
 void loop() {
-  float h = dht.readHumidity();
-  float t = dht.readTemperature(); // Celsius
-
-  if (isnan(h) || isnan(t)) {
-    Serial.println("Error al leer del DHT11");
-    return;
-  }
+  dht.read();
 
   Serial.print("Humedad: ");
-  Serial.print(h);
+  Serial.print(ms_sensor.getHumidity());
   Serial.print(" %\t");
   Serial.print("Temperatura: ");
-  Serial.print(t);
+  Serial.print(dht.getTemperature());
   Serial.println(" °C");
 
   delay(2000); // Espera 2 segundos entre lecturas
