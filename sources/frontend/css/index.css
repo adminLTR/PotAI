@@ -14,6 +14,31 @@ body, html {
   width: 100%;
   height: 100%;
 }
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  animation: scroll-left 5S linear infinite;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  margin-right: 2rem; /* Espaciado entre ítems */
+}
+
+/* Animación suave a la izquierda */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
 .bg-maceta {
     background-image: url('../assets//footer.png');
