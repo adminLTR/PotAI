@@ -36,6 +36,8 @@ class Planta(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30, blank=True, null=True) #Nombre de la planta mascota
     imagen = models.URLField(blank=True, null=True)
+    temperatura = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Temperatura (°C)", null=True, blank=True)
+    humedad = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return self.tipo.nombre
@@ -46,11 +48,12 @@ class Planta(models.Model):
         db_table = "Planta"
 
 
+
+
 #Riego
 class Riego(models.Model):
     temperatura = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Temperatura (°C)")
     humedad = models.DecimalField(max_digits=6, decimal_places=2)
-    #luz_intencidad = models.DecimalField(max_digits=6, decimal_places=2)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     id_planta = models.ForeignKey(Planta, on_delete=models.CASCADE, verbose_name="Planta")
     volumen_salida = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -88,10 +91,12 @@ class Riego(models.Model):
         
         try:
             # Usar los datos reales del objeto en lugar de valores fijos
-            id_planta_num = self.id_planta.id if self.id_planta else 7
-            temperatura_val = float(self.temperatura)
-            humedad_val = float(self.humedad)
+            id_planta_num = self.id_planta.id if self.id_planta else 0
+            temperatura_val = float(self.id_planta.temperatura)
+            humedad_val = float(self.id_planta.humedad)
             
+            self.temperatura = temperatura_val
+            self.humedad = humedad_val
             # Crear DataFrame con los datos del objeto actual
             nueva_entrada = pd.DataFrame([
                 [id_planta_num, humedad_val, temperatura_val]

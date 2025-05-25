@@ -37,7 +37,11 @@ class PlantaViewSet(viewsets.ModelViewSet):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
     
+    
+
     ordering = ['nombre']  # Orden predeterminado
+
+
 
 #Riego       
 class RiegoViewSet(viewsets.ModelViewSet):
