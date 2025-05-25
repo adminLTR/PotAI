@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework import permissions
 from .serializers import *
 from .models import *
@@ -11,6 +11,7 @@ from django.conf import settings
 from .filters import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError, NotFound
 
 #TipoPlanta
 class TipoPlantaViewSet(viewsets.ModelViewSet):
@@ -68,14 +69,17 @@ class PlantaViewSet(viewsets.ModelViewSet):
         except Planta.DoesNotExist:
             return Response({"error": "Planta no encontrada"}, status=404)
         
-    def update(self, request, *args, **kwargs):
+        
+    @action(detail=False, methods=["put"], url_path="actualizar/(?P<placa>[^/.]+)")
+    def actualizar_por_placa(self, request, placa=None):
         """
-        PUT /plantas/<id>/
-        Espera temperatura y humedad en el body, y actualiza la planta,
-        además de registrar un nuevo riego.
+        PUT /api/plantas/actualizar/<placa>/
+        Actualiza la planta por placa, registra riego y devuelve la predicción.
         """
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
+        try:
+            planta = Planta.objects.get(codigo_placa=placa)
+        except Planta.DoesNotExist:
+            raise NotFound("Planta con esa placa no encontrada.")
 
         temperatura = request.data.get('temperatura')
         humedad = request.data.get('humedad')
@@ -83,34 +87,37 @@ class PlantaViewSet(viewsets.ModelViewSet):
         if temperatura is None or humedad is None:
             raise ValidationError("Se requiere temperatura y humedad para actualizar la planta.")
 
-        # Actualizar planta
-        instance.temperatura = temperatura
-        instance.humedad = humedad
-        instance.save()
+        # Actualiza los datos de la planta
+        planta.temperatura = temperatura
+        planta.humedad = humedad
+        planta.save()
 
-        modelo_path = os.path.join(os.path.dirname(__file__), "modelo_riego_numerico.pkl")             
-        if modelo_path:
+        prediccion_valor = 0
+        modelo_path = os.path.join(os.path.dirname(__file__), "modelo_riego_numerico.pkl")
+
+        if os.path.exists(modelo_path):
             modelo = joblib.load(modelo_path)
-            id_tipo_planta = instance.tipo.pk
-            nueva_entrada = pd.DataFrame([
-                [id_tipo_planta, humedad, temperatura]
-            ], columns=['localname', 'moisture', 'temperature'])
+            id_tipo_planta = planta.tipo.pk
+            nueva_entrada = pd.DataFrame([[
+                id_tipo_planta, humedad, temperatura
+            ]], columns=['localname', 'moisture', 'temperature'])
+
             prediccion = modelo.predict(nueva_entrada)
-            print(prediccion)
-            if prediccion != 0:
-                # Crear nuevo riego
+            if prediccion[0] != 0:
+                prediccion_valor = prediccion[0]
                 Riego.objects.create(
-                    id_planta=instance,
+                    id_planta=planta,
                     temperatura=temperatura,
                     humedad=humedad,
-                    volumen_salida=prediccion[0]
+                    volumen_salida=prediccion_valor
                 )
 
-        else:
-            return Response({"error" : "No es posible conectar con el modelo"}, status=404)
-            
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data, status=200)
+        serializer = self.get_serializer(planta)
+        return Response({
+            "planta": serializer.data,
+            "prediccion": prediccion_valor
+        }, status=200)
+
 
 #Riego       
 class RiegoViewSet(viewsets.ModelViewSet):
@@ -128,3 +135,9 @@ class RiegoViewSet(viewsets.ModelViewSet):
     
     ordering = ['fecha_creacion']  # Orden predeterminado
 
+
+#
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
