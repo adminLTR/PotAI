@@ -67,6 +67,50 @@ class PlantaViewSet(viewsets.ModelViewSet):
             return Response(data)
         except Planta.DoesNotExist:
             return Response({"error": "Planta no encontrada"}, status=404)
+        
+    def update(self, request, *args, **kwargs):
+        """
+        PUT /plantas/<id>/
+        Espera temperatura y humedad en el body, y actualiza la planta,
+        además de registrar un nuevo riego.
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+
+        temperatura = request.data.get('temperatura')
+        humedad = request.data.get('humedad')
+
+        if temperatura is None or humedad is None:
+            raise ValidationError("Se requiere temperatura y humedad para actualizar la planta.")
+
+        # Actualizar planta
+        instance.temperatura = temperatura
+        instance.humedad = humedad
+        instance.save()
+
+        modelo_path = os.path.join(os.path.dirname(__file__), "modelo_riego_numerico.pkl")             
+        if modelo_path:
+            modelo = joblib.load(modelo_path)
+            id_tipo_planta = instance.tipo.pk
+            nueva_entrada = pd.DataFrame([
+                [id_tipo_planta, humedad, temperatura]
+            ], columns=['localname', 'moisture', 'temperature'])
+            prediccion = modelo.predict(nueva_entrada)
+            print(prediccion)
+            if prediccion != 0:
+                # Crear nuevo riego
+                Riego.objects.create(
+                    id_planta=instance,
+                    temperatura=temperatura,
+                    humedad=humedad,
+                    volumen_salida=prediccion[0]
+                )
+
+        else:
+            return Response({"error" : "No es posible conectar con el modelo"}, status=404)
+            
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=200)
 
 #Riego       
 class RiegoViewSet(viewsets.ModelViewSet):
