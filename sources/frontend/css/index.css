@@ -54,7 +54,7 @@ body, html {
 }
 
 .txt-bienvenida{
-    font-family: 'Montserrat'; 
+    font-family: 'Montserrat', sans-serif; 
     font-size: 40px;
     font-weight: bolder;
     line-height: 100%;
@@ -62,7 +62,7 @@ body, html {
 }
 
 .slogan{
-    font-family: 'Lato'; 
+    font-family: 'Lato', sans-serif; 
     font-style: italic; 
     font-size: 25px;
     line-height: 30px;
