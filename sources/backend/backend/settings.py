@@ -28,11 +28,12 @@ SECRET_KEY = 'django-insecure-6mvk=ta7pj=y)qfd=s-pb5tf@2-!cqqw%kyy4_f-@t+=7-ndj=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django_filters',
     'corsheaders',
     'rest_framework',    
@@ -173,7 +174,8 @@ REST_FRAMEWORK = {
 }
 
 # Para todas las conexiones
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+# CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ML_MODELS_PATH = os.path.join(BASE_DIR, 'ml_models')
 MODELO_RIEGO_PATH = os.path.join(BASE_DIR, "modelo_riego_numerico.pkl")

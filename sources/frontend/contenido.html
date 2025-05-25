@@ -23,16 +23,16 @@
       </div>
       <div>
         <div>
-          <h5 class="pb-1 fw-bold" style="font-size: 25px">Echeveria</h5>
+          <h5 class="pb-1 fw-bold" style="font-size: 25px" id="plant-name">Echeveria</h5>
         </div>
         <div class="d-flex gap-4 justify-content-center">
           <div class="d-flex gap-1 justify-content-center">
             <i class="fa-solid fa-temperature-three-quarters" style="color:#185746; font-size: 30px;"></i>
-            <p>24°C</p>
+            <p id="temperatura-actual">24°C</p>
           </div>
           <div class="d-flex gap-1 justify-content-center">
             <i class="fa-solid fa-droplet" style="color: #185746; font-size: 30px;"></i>
-            <p>32%</p>
+            <p id="humedad-actual">32%</p>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
               <th scope="col">Humedad</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="riegos-historial">
             <tr>
               <th scope="row">10:30</th>
               <td>200 ml</td>
@@ -72,5 +72,7 @@
         </table>
       </div>
     </div>
+    <script src="./js/api.js"></script>
+    <script src="./js/contenido.js"></script>
 </body>
 </html>
