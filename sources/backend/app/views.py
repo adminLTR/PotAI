@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework import permissions
 from .serializers import *
 from .models import *
@@ -128,3 +128,9 @@ class RiegoViewSet(viewsets.ModelViewSet):
     
     ordering = ['fecha_creacion']  # Orden predeterminado
 
+
+#
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
