@@ -1,20 +1,26 @@
 :root{
-    --primary: rgb(134, 172, 202);
-    --secondary: rgb(76, 98, 115);
     --auxiliar: rgb(145, 193, 168);
     --amarillo: rgb(254, 199, 134);
+    --extra: rgb(255, 247, 230);
+    --otro: rgb(255, 228, 197);
 }
 
 *{
-    background-color: var(--primary);
+    color: rgb(24, 87, 70);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
 }
 
 .bg-primary-1{
-    background-color: var(--primary);
+    background: linear-gradient(to top, #B8E0FF 20%, #39A8FF 100%);
+
 }
 
 .bg-secondary-1{
-    background-color: var(--secondary);
+    background-color: #BEF1D6;
 }
 
 .bg-auxiliar-1{
@@ -23,4 +29,52 @@
 
 .bg-amarillo-1{
     background-color: var(--amarillo);
+}
+.bg-extra-1{
+    background-color: var(--extra);
+}
+.bg-otro-1{
+    background-color: var(--otro);
+}
+
+
+.custom-table{
+    background-color: var(--extra) !important;
+    border-color:  var(--auxiliar);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.custom-table td, .custom-table th {
+    background-color: var(--extra) !important;
+    border-color:  var(--auxiliar);
+    color:  rgb(24, 87, 70);
+    font-size: 16px;
+    padding: .8rem .5rem;
+}
+
+.txt-bienvenida{
+    font-family: 'Montserrat'; 
+    font-size: 40px;
+    font-weight: bolder;
+    line-height: 100%;
+    color: #2C3B33;
+}
+
+.slogan{
+    font-family: 'Lato'; 
+    font-style: italic; 
+    font-size: 25px;
+    line-height: 30px;
+}
+
+.texto-carrusel{
+    font-size: 22px;
+    font-family: 'Lato'; 
+}
+
+.btn-comienza{
+    font-family: 'Lato'; 
+    font-size: 16px;
+    line-height: 100%;
 }
