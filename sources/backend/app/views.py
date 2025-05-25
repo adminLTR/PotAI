@@ -8,6 +8,7 @@ import joblib
 import pandas as pd
 import os
 from django.conf import settings
+from .filters import *
 
 #TipoPlanta
 class TipoPlantaViewSet(viewsets.ModelViewSet):
@@ -29,20 +30,28 @@ class PlantaViewSet(viewsets.ModelViewSet):
     """
     queryset = Planta.objects.all()
     serializer_class = PlantaSerializer
-    filterset_fields = '__all__'
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PlantaFilter
     
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
+    
+    ordering = ['nombre']  # Orden predeterminado
 
 #Riego       
 class RiegoViewSet(viewsets.ModelViewSet):
+    """
+    API Endpoint para CRUD de Riego.
+    """
     queryset = Riego.objects.all()
     serializer_class = RiegoSerializer
-    filterset_fields = '__all__'
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = RiegoFilter
 
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
     
- 
+    ordering = ['fecha_creacion']  # Orden predeterminado
+
