@@ -32,7 +32,7 @@ class TipoPlanta(models.Model):
 #Planta
 class Planta(models.Model):
     tipo = models.ForeignKey(TipoPlanta, on_delete=models.CASCADE, verbose_name="Tipo de planta")
-    codigo_placa = models.CharField(max_length=10, verbose_name="Código de placa", blank=True)
+    codigo_placa = models.CharField(max_length=10, verbose_name="Código de placa", blank=True, unique=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30, blank=True, null=True) #Nombre de la planta mascota
     imagen = models.URLField(blank=True, null=True)
