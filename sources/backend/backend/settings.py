@@ -174,3 +174,13 @@ REST_FRAMEWORK = {
 
 # Para todas las conexiones
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+
+ML_MODELS_PATH = os.path.join(BASE_DIR, 'ml_models')
+MODELO_RIEGO_PATH = os.path.join(BASE_DIR, "modelo_riego_numerico.pkl")
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}

@@ -23,7 +23,10 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 pytz==2025.2
 redis==6.1.0
+scikit-learn==1.6.1
+scipy==1.15.3
 six==1.17.0
 sqlparse==0.5.3
+threadpoolctl==3.6.0
 tzdata==2025.2
 uvicorn==0.34.2

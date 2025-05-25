@@ -4,8 +4,12 @@ from rest_framework import permissions
 from .serializers import *
 from .models import *
 from rest_framework.permissions import AllowAny
+import joblib
+import pandas as pd
+import os
+from django.conf import settings
 
-
+#TipoPlanta
 class TipoPlantaViewSet(viewsets.ModelViewSet):
     """
     API Endpoint para CRUD de TipoPlanta.
@@ -18,6 +22,7 @@ class TipoPlantaViewSet(viewsets.ModelViewSet):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
     
+#Planta
 class PlantaViewSet(viewsets.ModelViewSet):
     """
     API Endpoint para CRUD de Planta.
@@ -29,16 +34,15 @@ class PlantaViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
-    
+
+#Riego       
 class RiegoViewSet(viewsets.ModelViewSet):
-    """
-    API Endpoint para CRUD de Riego.
-    """
     queryset = Riego.objects.all()
     serializer_class = RiegoSerializer
     filterset_fields = '__all__'
-    
+
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
         return [permission() for permission in permission_classes]
-
+    
+ 
