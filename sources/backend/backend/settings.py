@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django_filters',
     'corsheaders',
     'rest_framework',    
@@ -173,7 +174,8 @@ REST_FRAMEWORK = {
 }
 
 # Para todas las conexiones
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+# CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ML_MODELS_PATH = os.path.join(BASE_DIR, 'ml_models')
 MODELO_RIEGO_PATH = os.path.join(BASE_DIR, "modelo_riego_numerico.pkl")

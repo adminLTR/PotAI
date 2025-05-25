@@ -48,8 +48,6 @@ class Planta(models.Model):
         db_table = "Planta"
 
 
-
-
 #Riego
 class Riego(models.Model):
     temperatura = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Temperatura (°C)")
@@ -113,21 +111,21 @@ class Riego(models.Model):
             print(f"Error en procesar_datos: {e}")
             raise Exception(f"Error al procesar datos con IA: {str(e)}")
     
-    def save(self, *args, **kwargs):
-        #Sobrescribe el método save para calcular volumen_salida automáticamente
-        is_new = self._state.adding  # Verifica si el objeto es nuevo
+    # def save(self, *args, **kwargs):
+    #     #Sobrescribe el método save para calcular volumen_salida automáticamente
+    #     is_new = self._state.adding  # Verifica si el objeto es nuevo
         
-        if is_new and self.volumen_salida is None:
-            try:
-                self.volumen_salida = self.procesar_datos()
-                print(f"Volumen calculado automáticamente: {self.volumen_salida}")
-            except Exception as e:
-                print(f"Error al calcular volumen: {e}")
-                # Puedes decidir si quieres que falle o usar un valor por defecto
-                # self.volumen_salida = 0.0  # Valor por defecto
-                raise  # Re-lanza la excepción para que falle la creación
+    #     if is_new and self.volumen_salida is None:
+    #         try:
+    #             self.volumen_salida = self.procesar_datos()
+    #             print(f"Volumen calculado automáticamente: {self.volumen_salida}")
+    #         except Exception as e:
+    #             print(f"Error al calcular volumen: {e}")
+    #             # Puedes decidir si quieres que falle o usar un valor por defecto
+    #             # self.volumen_salida = 0.0  # Valor por defecto
+    #             raise  # Re-lanza la excepción para que falle la creación
         
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
     
     class Meta:
         verbose_name = "Riego"

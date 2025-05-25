@@ -1,7 +1,7 @@
-const API_URL = "http://192.168.1.134:8000"
+const API_URL = "http://192.168.1.113:8000"
 
 async function fetchContenidoPage(id) {
-  const url = `${API_URL}/api/sensores/${id}`;
+  const url = `${API_URL}/plantas/${id}/info-planta/`;
 
   try {
     const response = await fetch(url);
@@ -9,9 +9,7 @@ async function fetchContenidoPage(id) {
       throw new Error(`Error HTTP: ${response.status}`);
     }
 
-    const data = await response.json();
-    console.log("Datos del sensor:", data);
-    return data;
+    return await response.json();
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
