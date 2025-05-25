@@ -7,6 +7,7 @@ async function main() {
     document.getElementById("plant-name").textContent = data["nombre"];
     document.getElementById("temperatura-actual").textContent = data["temperatura_actual"] + "°C";
     document.getElementById("humedad-actual").textContent = data["humedad_actual"] + "%";
+    document.getElementById("tipo").textContent = data["tipo_planta"];
 
     const historialBody = document.getElementById("riegos-historial");
     historialBody.innerHTML = ""; // Limpiar contenido anterior si lo hay
