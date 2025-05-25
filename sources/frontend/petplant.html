@@ -17,19 +17,25 @@
     <div class="container d-flex flex-column justify-content-center align-items-center text-center pt-5 position-relative">
         <div class="pt-3">
             <img src="assets/logo.png" class="bg-white rounded-circle p-1" alt="" style="height: 60px;">
-            <h1 class="txt-bienvenida align-middle mx-5 mt-2">Bienvenido a PotIA</h1>
-            <p class="pt-3 slogan">Tu macetero inteligente</p>
+            <h1 class="txt-login align-middle mx-3 mt-3">Regístra tu petplant</h1>
         </div>
-        <div class="d-flex justify-content-center align-items-center gap-4 py-3 m-3 bg-secondary-1 w-fit" style="border-radius: 14px;">
-            <h5 class="w-50 mb-0 texto-carrusel" style="color: var(--text);">Detecta tu petplant con IA</h5>
-            <video src="assets/scanplant.mp4" alt="" class="img-fluid" style="max-height: 66px; max-width: 50%;"></video>
-        </div>
+        <form class="text-start w-100 px-3">
+            <div class="mb-3">
+                <label for="nombre" class="" style="font-size: 22px;">Nombre:</label>
+                <input type="text" class="form-control shadow" id="nombre" placeholder="Escribe el nombre...">
+            </div>
+            <div class="mb-3">
+                <label for="tipo" class="" style="font-size: 22px;">Contraseña</label>
+                <input type="texto" class="form-control shadow" id="tipo" placeholder="Escribe el tipo de planta">
+            </div>
+            <div class="mb-3">
+                <label for="foto" class="" style="font-size: 22px;">Tómale una foto</label>
+                <input type="image" class="form-control shadow" id="imagen">
+            </div>
 
-        <a href="login.html" class="btn bg-secondary-1 mb-5 py-2 px-4 shadow btn-comienza border position-absolute bottom-0">Comienza</a>
-
-        <img src="assets/footer.png" alt="" class="img-fluid w-100 m-0 p-0" style="max-height: 500px; border: none;">
+            <a href="plantas.html" type="submit" class="btn bg-secondary-1 fs-6 d-block ms-auto mt-5">Registra</a>
+        </form>
+        <img src="assets/footer.png" alt="" class="img-fluid w-100 m-0 p-0 " style="max-height: 500px; border: none;">
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>
