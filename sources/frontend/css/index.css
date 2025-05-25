@@ -9,7 +9,9 @@
 body, html {
   width: 100%;
   height: 100%;
+  overflow-y: hidden;
 }
+
 .carousel-wrapper {
   overflow: hidden;
   width: 100%;
@@ -87,6 +89,24 @@ body, html {
     font-weight: bolder;
     line-height: 100%;
     color: #2C3B33;
+}
+.img-planta-contenido {
+    left: 25%;
+    top: -55%;
+}
+
+.scrollable-table-container {
+  max-height: 300px; /* Ajusta según tu diseño */
+  overflow-y: auto;
+}
+.scrollable-table-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollable-table-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .slogan{

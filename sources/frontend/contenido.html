@@ -12,64 +12,65 @@
     <title>Document</title>
 </head>
 <body class="bg-primary-1">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-  <div class="vh-100 d-flex flex-column align-items-center">
-    <div class="text-center mt-4">
-      <h1>Florencia</h1>
-      <p>Suculenta</p>
-    </div>
-    <div class="bg-extra-1 p-4 text-center align-items-center" style="border-radius: 14px;">
-      <div>
-        <img src="assets/echevaria-planta.jpg" alt="" class="img-fluid bg-white border rounded-circle" style="width: 145px; height: 145px; object-fit: cover;">
+    <div class="container bg-maceta h-100 d-flex flex-column justify-content-start align-items-center text-center position-relative">
+      <div class="text-center mt-2">
+        <h1 class="fw-bold" id="plant-name">Florencia</h1>
+        <p>Suculenta</p>
       </div>
-      <div class="d-flex text-center bg-secondary-1" style="border-radius: 14px;">
-        <div class="d-flex flex-column align-items-center texto-planta p-1">
-          <p>Temperatura ambiental</p>
-          <img src="assets/icons/device_thermostat.png" style="max-height: 24px;" alt="">
-          <p style="font-size: 22px;">15°C</p>
+      <div class="bg-extra-1 p-4 text-center align-items-center " style="border-radius: 14px;">
+        <div>
+          <img src="assets/echevaria-planta.jpg" alt="" class="img-fluid bg-white border rounded-circle" style="width: 145px; height: 145px; object-fit: cover;">
         </div>
-        <div class="bg-dark mx-1">|</div>
-        <div class="d-flex flex-column align-items-center texto-planta p-1">
-          <p>Humedad del suelo</p>
-          <img src="assets/icons/water_drop.png" style="max-height: 24px;" alt="">
-          <p style="font-size: 22px;">30%</p>
+        <div class="d-flex text-center justify-content-center bg-secondary-1 py-2 px-4" style="border-radius: 14px; max-width: 275px;">
+          <div class="d-flex flex-column align-items-center justify-content-center texto-planta p-1">
+            <p>Temperatura ambiental</p>
+            <img src="assets/icons/device_thermostat.png" style="max-height: 24px;" alt="">
+            <p id="temperatura-actual" style="font-size: 22px;">15°C</p>
+          </div>
+          <div class="bg-dark" style="width: 1px;"></div>
+          <div class="d-flex flex-column align-items-center texto-planta p-1">
+            <p>Humedad del suelo</p>
+            <img src="assets/icons/water_drop.png" style="max-height: 24px;" alt="">
+            <p id="humedad-actual" style="font-size: 22px;">30%</p>
+          </div>
         </div>
-      </div>
 
-    </div>
-    <div class="text-center ">
-      <h4 class="pb-2 fw-bold" style="font-size: 30px;">Historial de riego</h4>
-      <div class="table-responsive">
-        <table class="table custom-table text-center align-middle">
-          <thead>
-            <tr>
-              <th scope="col" style="font-size: 10px; padding: 0.5rem;">
-                <div class="p-1">
-                  <img src="assets/icons/alarm.png" alt="">
-                  Fecha y hora
-                </div>
-              </th>
-              <th scope="col">
-                <img src="assets/icons/kettle.png" alt="">
-                ml
-              </th>
-              <th scope="col">
-                <img src="assets/icons/device_thermostat.png" alt="">
-                °C
-              </th>
-              <th scope="col">
-                <img src="assets/icons/water_drop.png" alt="">
-                %
-              </th>
-            </tr>
-          </thead>
-          <tbody id="riegos-historial">
-            
-          </tbody>
-        </table>
+      </div>
+      <div class="text-center">
+        <h4 class="pb-2 fw-bold" style="font-size: 30px;">Historial de riego</h4>
+        <div class="table-responsive w-100 scrollable-table-container">
+          <table class="table custom-table text-center align-middle">
+            <thead>
+              <tr>
+                <th scope="col" style="font-size: 10px; padding: 0.5rem;">
+                  <div class="p-1">
+                    <img src="assets/icons/alarm.png" alt="">
+                    Fecha y hora
+                  </div>
+                </th>
+                <th scope="col">
+                  <img src="assets/icons/kettle.png" alt="">
+                  ml
+                </th>
+                <th scope="col">
+                  <img src="assets/icons/device_thermostat.png" alt="">
+                  °C
+                </th>
+                <th scope="col">
+                  <img src="assets/icons/water_drop.png" alt="">
+                  %
+                </th>
+              </tr>
+            </thead>
+            <tbody id="riegos-historial">
+              
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <script src="./js/api.js"></script>
     <script src="./js/contenido.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>

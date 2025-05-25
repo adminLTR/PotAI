@@ -29,17 +29,60 @@
         </div>
         <form class="text-start w-100 px-4">
             <div class="mb-3">
-                <label for="correo" class="" style="font-size: 22px;">Correo</label>
-                <input type="email" class="form-control shadow" id="correo" placeholder="Escribe tu correo...">
+                <label for="usuario" class="" style="font-size: 22px;">Usuario</label>
+                <input type="text" class="form-control shadow" id="usuario" placeholder="Escribe tu usuario...">
             </div>
             <div class="mb-3">
                 <label for="contraseña" class="" style="font-size: 22px;">Contraseña</label>
                 <input type="password" class="form-control shadow" id="contraseña" placeholder="********">
             </div>
 
-            <a href="plantas.html" type="submit" class="btn bg-secondary-1 fs-6 mt-5">Iniciar sesión</a>
+            <button id="login-btn" type="submit" class="btn bg-secondary-1 fs-6 mt-5">Iniciar sesión</button>
         </form>
         <!-- <img src="assets/footer.png" alt="" class="img-fluid w-100 m-0 p-0" style="max-height: 500px; border: none;"> -->
     </div>
+
+    <script>
+        const API_URL = "http://10.118.100.105:8000"
+        if (localStorage.getItem("access")) {
+            window.location.href = "contenido.html";
+        }
+
+        document.getElementById("login-btn").addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("usuario").value;
+            const password = document.getElementById("contraseña").value;
+
+            try {
+                const response = await fetch(`${API_URL}/api/login/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (data.access) {
+                    // Guarda el token si lo necesitas
+                    localStorage.setItem("access", data.access);
+                    // Redirige al dashboard o página principal
+                    window.location.href = "contenido.html";
+                } else {
+                    // Redirige a registro si falla
+                    window.location.href = "register.html";
+                }
+            } catch (error) {
+                console.error("Error en la petición:", error);
+                window.location.href = "register.html";
+            }
+        });
+    </script>
+
 </body>
 </html>
