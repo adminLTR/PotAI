@@ -4,11 +4,11 @@ Welcome to **PotAI**, an intelligent and sustainable plant watering system power
 
 ## 👥 Contributors
 
-- Asthri Pardave (AsthriPardave)
-- Giacomo Madrid (GiacomoMadrid)
-- Laura Mendoza (LauraNotFound)
-- Luis La Torre (AdminLTR)
-- Samir Garcia (SamirSG7)
+- Asthri Pardave [AsthriPardave](https://github.com/AsthriPardave)
+- Giacomo Madrid [GiacomoMadrid](https://github.com/GiacomoMadrid)
+- Laura Mendoza [LauraNotFound](https://github.com/LauraNotFound)
+- Luis La Torre [AdminLTR](https://github.com/adminLTR)
+- Samir Garcia [SamirSG7](https://github.com/SamirSG7)
 
 ## 🚀 Project Overview
 
