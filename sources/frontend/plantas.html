@@ -29,7 +29,7 @@
         </div>
     </div>
     <script>
-        const API_URL = "http://10.118.100.105:8000"
+        const API_URL = "http://192.168.166.193:8000"
         document.addEventListener("DOMContentLoaded", async () => {
             const container = document.getElementById("plantas-container");
 
@@ -55,7 +55,7 @@
                         tarjeta.className = "d-flex card mb-3 mx-auto align-items-center justify-content-center bg-secondary-1";
                         tarjeta.style.maxWidth = "300px";
                         tarjeta.innerHTML = `
-                            <div class="d-flex align-items-center justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center planta-div" data-id="${planta.id}">
                                 <div class="">
                                     <img src="assets/echevaria-planta.jpg" alt="" class="img-fluid bg-white border rounded-circle" style="width: 145px; height: 71px; width: 71px; object-fit: cover;">
                                 </div>
@@ -65,6 +65,12 @@
                                 </div>
                             </div>
                         `;
+
+                        tarjeta.querySelector(".planta-div").addEventListener("click", function () {
+                            const plantaId = this.dataset.id;
+                            window.location.href = `contenido.html`;
+                        });
+
                         container.appendChild(tarjeta);
                     });
                 } else {
@@ -75,6 +81,7 @@
                 container.innerHTML += `<p class="text-danger text-center">Error al cargar tus petplants.</p>`;
             }
         });
+        
     </script>
 </body>
 </html>

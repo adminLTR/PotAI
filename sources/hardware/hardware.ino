@@ -11,11 +11,11 @@
 #define MOISTUREPIN 34
 #define BOMBPIN 2
 
-const char* ssid = "LTR";
-const char* password = "2J8LQV5L";
+const char* ssid = "Joa";
+const char* password = "JoannePJ5";
 
 String codESP32 = "ESP32LT";  // <- Valor del campo `placa`
-String serverUrl = "http://192.168.1.113:8000/plantas/actualizar/" + codESP32 + "/";
+String serverUrl = "http://192.168.165.193:8000/plantas/actualizar/" + codESP32 + "/";
 
 unsigned long lastRequestTime = 0;
 unsigned long interval = 24UL * 60UL * 60UL * 1000UL; // 24 horas en milisegundos
@@ -52,53 +52,68 @@ void loop() {
     Serial.println(humedad);
 
     if (WiFi.status() == WL_CONNECTED) {
-  HTTPClient http;
-  http.begin(serverUrl);
-  http.addHeader("Content-Type", "application/json");
+      HTTPClient http;
+      http.begin(serverUrl);
+      http.setTimeout(10000); // 10 segundos
+      http.addHeader("Content-Type", "application/json");
+      Serial.println(serverUrl);
 
-  StaticJsonDocument<200> doc;
-  doc["temperatura"] = temperatura;
-  doc["humedad"] = humedad;
+      StaticJsonDocument<200> doc;
+      doc["temperatura"] = temperatura;
+      doc["humedad"] = humedad;
 
-  String requestBody;
-  serializeJson(doc, requestBody);
+      String requestBody;
+      serializeJson(doc, requestBody);
 
-  int httpResponseCode = http.PUT(requestBody);
+      int httpResponseCode = http.PUT(requestBody);
+      Serial.println(httpResponseCode);
 
-  if (httpResponseCode > 0) {
-    String response = http.getString();
-    Serial.println("Respuesta del servidor:");
-    Serial.println(response);
+      if (httpResponseCode > 0) {
+        String response = http.getString();
+        Serial.println("Respuesta del servidor:");
+        Serial.println(response);
 
-    // Parsear JSON
-    StaticJsonDocument<300> resDoc;
-    DeserializationError error = deserializeJson(resDoc, response);
+        if (httpResponseCode == -1) {
+          Serial.print("Error detail: ");
+          Serial.println(http.errorToString(httpResponseCode));
+        }
 
-    if (!error) {
-      float prediccion = resDoc["prediccion"];  // en mililitros
-      Serial.print("Predicción (ml): ");
-      Serial.println(prediccion);
+        if (httpResponseCode == -1) {
+          Serial.print("HTTP Error: ");
+          Serial.println(http.errorToString(httpResponseCode));
+        }
 
-      if (prediccion > 0) {
-        // Calcular tiempo en milisegundos
-        float caudal = 18.473;  // ml/s
-        int tiempo_ms = (prediccion / caudal) * 1000;
-        Serial.print("Tiempo para regar (ms): ");
-        Serial.println(tiempo_ms);
-        bomb.water(tiempo_ms);
+        // Parsear JSON
+        StaticJsonDocument<300> resDoc;
+        DeserializationError error = deserializeJson(resDoc, response);
+
+        if (!error) {
+          float prediccion = resDoc["prediccion"];  // en mililitros
+          Serial.print("Predicción (ml): ");
+          Serial.println(prediccion);
+
+          if (prediccion > 0) {
+            // Calcular tiempo en milisegundos
+            float caudal = 18.473;  // ml/s
+            int tiempo_ms = (prediccion / caudal) * 1000;
+            Serial.print("Tiempo para regar (ms): ");
+            Serial.println(tiempo_ms);
+            bomb.water(tiempo_ms);
+          } else {
+            Serial.println("No se necesita riego.");
+          }
+        } else {
+          Serial.println("Error al parsear la respuesta JSON");
+        }
       } else {
-        Serial.println("No se necesita riego.");
-      }
-    } else {
-      Serial.println("Error al parsear la respuesta JSON");
-    }
-  } else {
-    Serial.print("Error HTTP: ");
-    Serial.println(httpResponseCode);
-  }
+        Serial.print("Error HTTP: ");
+        Serial.println(httpResponseCode);
+        bomb.water(3000);
 
-  http.end();
-}
+      }
+
+      http.end();
+    }
 
 
     lastRequestTime = currentTime;

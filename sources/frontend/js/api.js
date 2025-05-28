@@ -1,4 +1,4 @@
-const API_URL = "http://10.118.100.105:8000"
+const API_URL = "http://192.168.166.193:8000"
 
 async function fetchContenidoPage(id) {
   const url = `${API_URL}/plantas/${id}/info-planta/`;
