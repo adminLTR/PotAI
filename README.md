@@ -9,6 +9,7 @@ Welcome to **PotAI**, an intelligent and sustainable plant watering system power
 - Laura Mendoza [LauraNotFound](https://github.com/LauraNotFound)
 - Luis La Torre [AdminLTR](https://github.com/adminLTR)
 - Samir Garcia [SamirSG7](https://github.com/SamirSG7)
+- **Mentor**: [Yanina Renteria](https://www.linkedin.com/in/yaninagiron/?midToken=AQGr0w-OWF7Vkg&midSig=2apvAusf1AEXM1&trk=eml-email_jobs_job_application_viewed_01-members_from_company-0-profile_name&trkEmail=eml-email_jobs_job_application_viewed_01-members_from_company-0-profile_name-null-kgsm7z~mb75hpct~30-null-null&eid=kgsm7z-mb75hpct-30&otpToken=MTMwNzFkZTcxNzJkY2JjMWIwMmQwZmViNDExYWVmYjc4N2M2ZDc0MzlkYTg4ODYyN2JjZjAyNmI0YjVkNTVmMWZmZDVkNWU5NmJiNWM4ZGE1MDlhZjJiNjAyNmE3YTVjZDNjYTVmOWI1NmVlNzljZTFmYjg5YjM2LDEsMQ%3D%3D)
 
 ## 🚀 Project Overview
 
