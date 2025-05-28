@@ -68,6 +68,10 @@ PotAI contributes to **SDG 6 – Clean Water and Sanitation** and **SDG 12 – R
 
 ## 📷 Demo / Screenshots
 
-*(Insert images or GIFs of your system and interface here)*
+<p align="center">
+  <img src="img/group.jpg" width="200"/>
+  <img src="img/pot.jpg" width="200"/>
+  <img src="img/circuit.png" width="200"/>
+</p>
 
 ---
