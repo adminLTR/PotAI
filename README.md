@@ -4,10 +4,10 @@ Welcome to **PotAI**, an intelligent and sustainable plant watering system power
 
 ## 👥 Contributors
 
-- Luis La Torre (AdminLTR)
 - Asthri Pardave (AsthriPardave)
-- Laura Mendoza (LauraNotFound)
 - Giacomo Madrid (GiacomoMadrid)
+- Laura Mendoza (LauraNotFound)
+- Luis La Torre (AdminLTR)
 - Samir Garcia (SamirSG7)
 
 ## 🚀 Project Overview
