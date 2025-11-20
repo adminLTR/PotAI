@@ -1,0 +1,13 @@
+flask
+flask-mysqldb
+flask-jwt-extended
+flask-cors
+python-dotenv
+werkzeug
+tensorflow
+pillow
+numpy
+requests
+joblib
+scikit-learn
+pandas

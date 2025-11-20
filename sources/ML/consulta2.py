@@ -5,7 +5,7 @@ import pandas as pd
 modelo = joblib.load("modelo_riego_numerico.pkl")
 
 # Nueva entrada de ejemplo: planta 1 (Menta), humedad 28%, temperatura 30 °C
-nueva_entrada = pd.DataFrame([[7, 5, 35]], columns=['localname', 'moisture', 'temperature'])
+nueva_entrada = pd.DataFrame([[1, 28, 30]], columns=['localname', 'moisture', 'temperature'])
 
 # Predecir
 prediccion = modelo.predict(nueva_entrada)

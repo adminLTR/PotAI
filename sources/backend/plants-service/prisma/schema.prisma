@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Plant {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @map("user_id")
+  potId       Int?      @map("pot_id")
+  name        String    @db.VarChar(100)
+  imageUrl    String?   @map("image_url") @db.VarChar(255)
+  speciesId   Int?      @map("species_id")
+  plantedAt   DateTime? @map("planted_at") @db.Date
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  @@index([userId])
+  @@index([potId])
+  @@index([speciesId])
+  @@map("plants")
+}

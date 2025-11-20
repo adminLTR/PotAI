@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Species {
+  id                   Int      @id @default(autoincrement())
+  commonName           String   @map("common_name") @db.VarChar(100)
+  scientificName       String   @map("scientific_name") @db.VarChar(100)
+  waterRequirements    String?  @map("water_requirements") @db.VarChar(255)
+  lightRequirements    String?  @map("light_requirements") @db.VarChar(255)
+  humidityRequirements String?  @map("humidity_requirements") @db.VarChar(255)
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+  
+  @@unique([commonName, scientificName])
+  @@index([commonName])
+  @@map("species")
+}

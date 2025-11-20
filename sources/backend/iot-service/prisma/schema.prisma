@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AmbientalCondition {
+  id                 Int       @id @default(autoincrement())
+  plantId            Int       @map("plant_id")
+  temperatureCelsius Float?    @map("temperature_celsius") @db.Float
+  humidityPercent    Float?    @map("humidity_percent") @db.Float
+  moisturePercent    Float?    @map("moisture_percent") @db.Float
+  lightLux           Float?    @map("light_lux") @db.Float
+  recordedAt         DateTime  @default(now()) @map("recorded_at")
+  
+  wateringLogs       WateringLog[]
+  
+  @@index([plantId])
+  @@index([recordedAt])
+  @@map("ambiental_conditions")
+}
+
+model WateringLog {
+  id                      Int                 @id @default(autoincrement())
+  ambientalConditionsId   Int                 @map("ambiental_conditions_id")
+  wateredAt               DateTime            @default(now()) @map("watered_at")
+  amountMl                Int                 @map("amount_ml")
+  
+  ambientalCondition      AmbientalCondition  @relation(fields: [ambientalConditionsId], references: [id], onDelete: Cascade)
+  
+  @@index([ambientalConditionsId])
+  @@map("watering_logs")
+}

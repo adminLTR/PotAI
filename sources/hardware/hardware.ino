@@ -11,11 +11,11 @@
 #define MOISTUREPIN 34
 #define BOMBPIN 2
 
-const char* ssid = "Joa";
-const char* password = "JoannePJ5";
+const char* ssid = "VICTORIA 3";
+const char* password = "2J8LQV5L";
 
 String codESP32 = "ESP32LT";  // <- Valor del campo `placa`
-String serverUrl = "http://192.168.165.193:8000/plantas/actualizar/" + codESP32 + "/";
+String serverUrl = "http://10.57.125.193:8000/plantas/actualizar/" + codESP32 + "/";
 
 unsigned long lastRequestTime = 0;
 unsigned long interval = 24UL * 60UL * 60UL * 1000UL; // 24 horas en milisegundos
@@ -30,7 +30,9 @@ void setup() {
   pinMode(BOMBPIN, OUTPUT);
 
   WiFi.begin(ssid, password);
+  delay(2000);
   Serial.print("Conectando a WiFi...");
+  delay(2000);
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.print(".");

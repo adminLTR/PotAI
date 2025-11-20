@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registro.css">
+    <title>Registro</title>
+</head>
+
+<body>
+    <img src="./assets/potai-icon.png" alt="ícono de PotAI" class="potai-icon">
+    <h1 class="title-potai">PotAI</h1>
+
+    <div class="nombres">
+        <img class="nombres-icon" src="./assets/person.svg" alt="Ícono de persona">
+        <input type="text" id="username-input" class="input-field" placeholder="Nombres y Apellidos" required>
+    </div>
+
+    <div class="correo">
+        <img class="correo-icon" src="./assets/correo-icon.svg" alt="Ícono de correo">
+        <input type="email" id="email-input" class="input-field" placeholder="Correo electrónico" required>
+    </div>
+
+    <div class="password">
+        <img class="password-icon" src="./assets/password.svg" alt="Ícono de contraseña">
+        <input type="password" id="password-input" class="input-field" placeholder="Contraseña" required>
+    </div>
+
+    <div class="tyc">
+        <input type="checkbox" id="tyc-checkbox">
+        <label for="tyc-checkbox" id="tyc-label">He leído y acepto los términos y condiciones.</label>
+    </div>
+
+    <div id="error-message" class="error-message" style="display: none;"></div>
+
+    <div class="registrarse" id="registrarse-btn">
+        <p class="registrarse-text">Registrarse</p>
+    </div>
+
+    <p class="ya-tienes-cuenta">
+        ¿Ya tienes cuenta?
+    </p>
+</body>
+<script src="js/config.js"></script>
+<script src="main.js"></script>
+
+</html>
