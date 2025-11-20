@@ -7,9 +7,9 @@
 
 // 18.473ml/s
 
-#define DHTPIN 4 
-#define MOISTUREPIN 34
-#define BOMBPIN 2
+#define DHTPIN  27
+#define MOISTUREPIN 25
+#define BOMBPIN 32
 
 const char* ssid = "VICTORIA 3";
 const char* password = "2J8LQV5L";

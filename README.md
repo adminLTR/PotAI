@@ -4,11 +4,12 @@ Welcome to **PotAI**, an intelligent and sustainable plant watering system power
 
 ## 👥 Contributors
 
-- Asthri Pardave (AsthriPardave)
-- Giacomo Madrid (GiacomoMadrid)
-- Laura Mendoza (LauraNotFound)
-- Luis La Torre (AdminLTR)
-- Samir Garcia (SamirSG7)
+- Asthri Pardave [AsthriPardave](https://github.com/AsthriPardave)
+- Giacomo Madrid [GiacomoMadrid](https://github.com/GiacomoMadrid)
+- Laura Mendoza [LauraNotFound](https://github.com/LauraNotFound)
+- Luis La Torre [AdminLTR](https://github.com/adminLTR)
+- Samir Garcia [SamirSG7](https://github.com/SamirSG7)
+- **Mentor**: [Yanina Renteria](https://www.linkedin.com/in/yaninagiron/?midToken=AQGr0w-OWF7Vkg&midSig=2apvAusf1AEXM1&trk=eml-email_jobs_job_application_viewed_01-members_from_company-0-profile_name&trkEmail=eml-email_jobs_job_application_viewed_01-members_from_company-0-profile_name-null-kgsm7z~mb75hpct~30-null-null&eid=kgsm7z-mb75hpct-30&otpToken=MTMwNzFkZTcxNzJkY2JjMWIwMmQwZmViNDExYWVmYjc4N2M2ZDc0MzlkYTg4ODYyN2JjZjAyNmI0YjVkNTVmMWZmZDVkNWU5NmJiNWM4ZGE1MDlhZjJiNjAyNmE3YTVjZDNjYTVmOWI1NmVlNzljZTFmYjg5YjM2LDEsMQ%3D%3D)
 
 ## 🚀 Project Overview
 
@@ -69,9 +70,9 @@ PotAI contributes to **SDG 6 – Clean Water and Sanitation** and **SDG 12 – R
 ## 📷 Demo / Screenshots
 
 <p align="center">
-  <img src="img/group.jpg" width="200"/>
-  <img src="img/pot.jpg" width="200"/>
-  <img src="img/circuit.png" width="200"/>
+  <img src="img/group.jpg" height="200"/>
+  <img src="img/pot.jpg" height="200"/>
+  <img src="img/circuit.png" height="200"/>
 </p>
 
 ---
