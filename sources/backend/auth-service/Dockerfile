@@ -12,15 +12,15 @@ RUN npm install
 # Copiar prisma schema
 COPY prisma ./prisma/
 
-# Copiar código fuente
-COPY . .
+# Copiar código fuente (excluyendo node_modules via .dockerignore)
+COPY src ./src
+COPY docker-entrypoint.sh ./
 
 # Copiar script de inicialización
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN mv docker-entrypoint.sh /usr/local/bin/ && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 3001
 
 # Usar entrypoint para ejecutar migraciones antes de iniciar
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/usr/local/bin/docker-entrypoint.sh"]
 CMD ["npm", "run", "dev"]

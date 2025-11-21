@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const { connectDatabase } = require('./config/database');
@@ -19,6 +20,7 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
   credentials: true
 }));
+app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('dev'));
@@ -27,17 +29,34 @@ app.use(morgan('dev'));
 app.get('/', (req, res) => {
   res.json({ 
     service: 'Auth Service',
-    version: '1.0.0',
+    version: '2.0.0',
+    description: 'Complete authentication service with JWT, sessions, and refresh tokens',
     endpoints: {
-      auth: {
-        register: 'POST /auth/register',
-        login: 'POST /auth/login',
-        logout: 'POST /auth/logout',
-        validate: 'GET /auth/validate',
-        me: 'GET /auth/me',
-        health: 'GET /auth/health'
+      public: {
+        register: 'POST /auth/register - Register new user',
+        login: 'POST /auth/login - Login and get tokens',
+        refresh: 'POST /auth/refresh - Refresh access token',
+        validate: 'GET /auth/validate - Validate tokens (for other services)',
+        health: 'GET /auth/health - Health check'
+      },
+      protected: {
+        logout: 'POST /auth/logout - Logout current session',
+        logoutAll: 'POST /auth/logout-all - Logout all sessions',
+        me: 'GET /auth/me - Get current user info',
+        changePassword: 'PUT /auth/change-password - Change password',
+        sessions: 'GET /auth/sessions - Get all active sessions',
+        revokeSession: 'DELETE /auth/sessions/:sessionToken - Revoke specific session'
       }
-    }
+    },
+    features: [
+      'JWT access tokens',
+      'Refresh token rotation',
+      'Session management with Redis caching',
+      'IP address and User-Agent tracking',
+      'HttpOnly cookies for refresh tokens',
+      'Password hashing with bcrypt',
+      'Automatic session cleanup'
+    ]
   });
 });
 

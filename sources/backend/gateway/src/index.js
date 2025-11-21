@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const { authMiddleware, requireAuth } = require('./middleware/auth.middleware');
 require('dotenv').config();
 
 const app = express();
@@ -17,10 +18,16 @@ const limiter = rateLimit({
 });
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: true
+}));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(limiter);
+
+// Middleware de autenticación global (opcional, no bloquea)
+app.use(authMiddleware);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -35,15 +42,24 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
   res.json({
     service: 'API Gateway',
-    version: '1.0.0',
+    version: '2.0.0',
+    description: 'API Gateway with automatic authentication validation',
     services: {
-      auth: '/auth/*',
-      plants: '/plants/*',
-      pots: '/pots/*',
-      iot: '/iot/*',
-      media: '/media/*',
-      species: '/species/*',
-      ml: '/ml/*'
+      auth: '/auth/* - Authentication service (public)',
+      plants: '/plants/* - Plants management (auth optional)',
+      pots: '/pots/* - Pots management (auth optional)',
+      iot: '/iot/* - IoT devices (auth optional)',
+      media: '/media/* - Media storage (auth optional)',
+      species: '/species/* - Species information (auth optional)',
+      ml: '/ml/* - Machine Learning predictions (auth optional)'
+    },
+    authentication: {
+      description: 'All requests are validated if Authorization header is present',
+      headers: {
+        authorization: 'Bearer <access_token>',
+        session: 'x-session-token: <session_token>'
+      },
+      userInfo: 'Validated user info is injected in headers: x-user-id, x-user-username, x-user-email'
     }
   });
 });

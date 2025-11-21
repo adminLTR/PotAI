@@ -16,10 +16,6 @@ const authenticate = async (req, res, next) => {
       throw new UnauthorizedError('Missing access token');
     }
 
-    if (!sessionToken) {
-      throw new UnauthorizedError('Missing session token');
-    }
-
     const accessToken = authHeader.substring(7);
 
     // Verificar JWT
@@ -30,15 +26,19 @@ const authenticate = async (req, res, next) => {
       throw new UnauthorizedError(error.message);
     }
 
-    // Validar sesión
-    const session = await sessionService.validateSession(sessionToken);
-    if (!session) {
-      throw new UnauthorizedError('Invalid or expired session');
-    }
+    // Validar sesión si se proporciona
+    if (sessionToken) {
+      const session = await sessionService.validateSession(sessionToken);
+      if (!session) {
+        throw new UnauthorizedError('Invalid or expired session');
+      }
 
-    // Verificar que el userId del JWT coincida con la sesión
-    if (session.userId !== decoded.userId) {
-      throw new UnauthorizedError('Token mismatch');
+      // Verificar que el userId del JWT coincida con la sesión
+      if (session.userId !== decoded.userId) {
+        throw new UnauthorizedError('Token mismatch');
+      }
+
+      req.sessionToken = sessionToken;
     }
 
     // Agregar información del usuario al request
@@ -47,8 +47,6 @@ const authenticate = async (req, res, next) => {
       username: decoded.username,
       email: decoded.email
     };
-
-    req.sessionToken = sessionToken;
 
     next();
   } catch (error) {
