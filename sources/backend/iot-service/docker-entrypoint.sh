@@ -1,18 +1,18 @@
 #!/bin/sh
 set -e
 
-echo "🔄 Starting migration process..."
+echo "ðŸ”„ Starting migration process..."
 
 # Generar Prisma Client
-echo "📦 Generating Prisma Client..."
+echo "ðŸ“¦ Generating Prisma Client..."
 npx prisma generate
 
 # Ejecutar migraciones
-echo "🗄️  Running database migrations..."
+echo "ðŸ—„ï¸  Running database migrations..."
 npx prisma migrate deploy
 
-echo "✅ Migrations completed successfully!"
+echo "âœ… Migrations completed successfully!"
 
-# Iniciar la aplicación
-echo "🚀 Starting application..."
+# Iniciar la aplicaciÃ³n
+echo "ðŸš€ Starting application..."
 exec "$@"
