@@ -163,7 +163,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3002
-      DATABASE_URL: mysql://potai:potaipass@plants-db:3306/potai_plants
+      DATABASE_URL: mysql://root:rootpass@plants-db:3306/potai_plants
+      SHADOW_DATABASE_URL: mysql://root:rootpass@plants-db:3306/potai_plants_shadow
       AUTH_SERVICE_URL: http://auth-service:3001
       MEDIA_SERVICE_URL: http://media-service:3005
       SPECIES_SERVICE_URL: http://species-service:3006
@@ -188,7 +189,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3003
-      DATABASE_URL: mysql://potai:potaipass@pots-db:3306/potai_pots
+      DATABASE_URL: mysql://root:rootpass@pots-db:3306/potai_pots
+      SHADOW_DATABASE_URL: mysql://root:rootpass@pots-db:3306/potai_pots_shadow
       AUTH_SERVICE_URL: http://auth-service:3001
     ports:
       - "3003:3003"
@@ -211,7 +213,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3004
-      DATABASE_URL: mysql://potai:potaipass@iot-db:3306/potai_iot
+      DATABASE_URL: mysql://root:rootpass@iot-db:3306/potai_iot
+      SHADOW_DATABASE_URL: mysql://root:rootpass@iot-db:3306/potai_iot_shadow
       ML_SERVICE_URL: http://ml-service:5000
       PLANTS_SERVICE_URL: http://plants-service:3002
       IOT_API_KEY: ${IOT_API_KEY:-potai-iot-secret-key}
@@ -257,7 +260,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3006
-      DATABASE_URL: mysql://potai:potaipass@species-db:3306/potai_species
+      DATABASE_URL: mysql://root:rootpass@species-db:3306/potai_species
+      SHADOW_DATABASE_URL: mysql://root:rootpass@species-db:3306/potai_species_shadow
     ports:
       - "3006:3006"
     depends_on:

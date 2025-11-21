@@ -15,7 +15,12 @@ COPY prisma ./prisma/
 # Copiar código fuente
 COPY . .
 
+# Copiar script de inicialización
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 3001
 
-# Generar Prisma Client al iniciar
-CMD ["sh", "-c", "npx prisma generate && npm run dev"]
+# Usar entrypoint para ejecutar migraciones antes de iniciar
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["npm", "run", "dev"]

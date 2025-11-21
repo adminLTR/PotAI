@@ -11,6 +11,10 @@ COPY prisma ./prisma/
 
 COPY . .
 
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 3002
 
-CMD ["sh", "-c", "npx prisma generate && npm run dev"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["npm", "run", "dev"]

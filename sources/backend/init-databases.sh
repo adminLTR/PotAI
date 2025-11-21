@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Script para inicializar todas las bases de datos y crear las shadow databases
+# Ejecutar desde: sources/backend/
+
+set -e
+
+echo "🗄️  Inicializando bases de datos..."
+
+# Crear bases de datos shadow
+docker-compose exec auth-db mysql -u root -prootpass -e "CREATE DATABASE IF NOT EXISTS potai_auth_shadow;" 2>/dev/null || true
+docker-compose exec plants-db mysql -u root -prootpass -e "CREATE DATABASE IF NOT EXISTS potai_plants_shadow;" 2>/dev/null || true
+docker-compose exec pots-db mysql -u root -prootpass -e "CREATE DATABASE IF NOT EXISTS potai_pots_shadow;" 2>/dev/null || true
+docker-compose exec iot-db mysql -u root -prootpass -e "CREATE DATABASE IF NOT EXISTS potai_iot_shadow;" 2>/dev/null || true
+docker-compose exec species-db mysql -u root -prootpass -e "CREATE DATABASE IF NOT EXISTS potai_species_shadow;" 2>/dev/null || true
+
+echo "✅ Bases de datos shadow creadas"
+
+# Ejecutar migraciones en cada servicio
+services=("auth-service" "plants-service" "pots-service" "iot-service" "species-service")
+
+for service in "${services[@]}"; do
+    echo ""
+    echo "📦 Ejecutando migraciones para $service..."
+    cd "$service"
+    
+    # Verificar si ya existen migraciones
+    if [ -d "prisma/migrations" ] && [ "$(ls -A prisma/migrations)" ]; then
+        echo "   ✓ Migraciones ya existen para $service"
+    else
+        echo "   📝 Creando migración inicial para $service..."
+        npx prisma migrate dev --name init
+    fi
+    
+    cd ..
+done
+
+echo ""
+echo "✅ ¡Todas las migraciones están listas!"
+echo ""
+echo "Ahora puedes ejecutar: docker-compose up --build"
