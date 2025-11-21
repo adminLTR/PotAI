@@ -2,8 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Instalar OpenSSL para Prisma
-RUN apk add --no-cache openssl
+# Instalar OpenSSL para Prisma y MySQL client para shadow database
+RUN apk add --no-cache openssl mysql-client
 
 # Instalar dependencias
 COPY package*.json ./

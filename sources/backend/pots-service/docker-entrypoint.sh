@@ -3,6 +3,10 @@ set -e
 
 echo "🔄 Starting migration process..."
 
+# Crear shadow database si no existe (necesaria para prisma migrate dev)
+echo "🗄️  Creating shadow database if not exists..."
+mysql -h pots-db -u root -prootpass -e "CREATE DATABASE IF NOT EXISTS potai_pots_shadow;" 2>/dev/null || echo "   ℹ️  Could not create shadow database (may already exist)"
+
 # Generar Prisma Client
 echo "📦 Generating Prisma Client..."
 npx prisma generate
