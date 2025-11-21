@@ -135,7 +135,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3001
-      DATABASE_URL: mysql://potai:potaipass@auth-db:3306/potai_auth
+      DATABASE_URL: mysql://root:rootpass@auth-db:3306/potai_auth
+      SHADOW_DATABASE_URL: mysql://root:rootpass@auth-db:3306/potai_auth_shadow
       REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-this}
       JWT_EXPIRES_IN: 2h

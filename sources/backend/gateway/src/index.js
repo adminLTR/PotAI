@@ -64,8 +64,8 @@ const proxyOptions = {
 // Rutas de microservicios
 app.use('/auth', createProxyMiddleware({
   ...proxyOptions,
-  target: process.env.AUTH_SERVICE_URL || 'http://auth-service:3001',
-  pathRewrite: { '^/auth': '' }
+  target: process.env.AUTH_SERVICE_URL || 'http://auth-service:3001'
+  // No reescribimos la ruta, el servicio ya maneja /auth
 }));
 
 app.use('/plants', createProxyMiddleware({
