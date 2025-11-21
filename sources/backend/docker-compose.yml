@@ -7,6 +7,7 @@ services:
   auth-db:
     image: mysql:8.0
     container_name: potai-auth-db
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
       MYSQL_DATABASE: potai_auth
@@ -28,6 +29,7 @@ services:
   plants-db:
     image: mysql:8.0
     container_name: potai-plants-db
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
       MYSQL_DATABASE: potai_plants
@@ -49,6 +51,7 @@ services:
   pots-db:
     image: mysql:8.0
     container_name: potai-pots-db
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
       MYSQL_DATABASE: potai_pots
@@ -70,6 +73,7 @@ services:
   iot-db:
     image: mysql:8.0
     container_name: potai-iot-db
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
       MYSQL_DATABASE: potai_iot
@@ -91,6 +95,7 @@ services:
   species-db:
     image: mysql:8.0
     container_name: potai-species-db
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
       MYSQL_DATABASE: potai_species

@@ -16,6 +16,7 @@ model Species {
   waterRequirements    String?  @map("water_requirements") @db.VarChar(255)
   lightRequirements    String?  @map("light_requirements") @db.VarChar(255)
   humidityRequirements String?  @map("humidity_requirements") @db.VarChar(255)
+  moistureRequirements String?  @map("moisture_requirements") @db.VarChar(255)
   createdAt            DateTime @default(now()) @map("created_at")
   updatedAt            DateTime @updatedAt @map("updated_at")
   

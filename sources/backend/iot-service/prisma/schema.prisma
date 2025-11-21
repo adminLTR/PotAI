@@ -15,7 +15,7 @@ model AmbientalCondition {
   temperatureCelsius Float?    @map("temperature_celsius") @db.Float
   humidityPercent    Float?    @map("humidity_percent") @db.Float
   moisturePercent    Float?    @map("moisture_percent") @db.Float
-  light           Float?    @map("light_lux") @db.Float
+  light              Float?    @map("light_lux") @db.Float
   recordedAt         DateTime  @default(now()) @map("recorded_at")
   
   wateringLogs       WateringLog[]
