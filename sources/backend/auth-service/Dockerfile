@@ -2,6 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Instalar OpenSSL para Prisma
+RUN apk add --no-cache openssl
+
 # Instalar dependencias
 COPY package*.json ./
 RUN npm install
@@ -9,12 +12,10 @@ RUN npm install
 # Copiar prisma schema
 COPY prisma ./prisma/
 
-# Generar Prisma Client
-RUN npx prisma generate
-
 # Copiar código fuente
 COPY . .
 
 EXPOSE 3001
 
-CMD ["npm", "run", "dev"]
+# Generar Prisma Client al iniciar
+CMD ["sh", "-c", "npx prisma generate && npm run dev"]
