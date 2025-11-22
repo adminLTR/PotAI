@@ -17,7 +17,7 @@ class ApiService {
         const user = localStorage.getItem('currentUser');
         if (user) {
             const userData = JSON.parse(user);
-            return userData.token || null;
+            return userData.accessToken || null;
         }
         return null;
     }

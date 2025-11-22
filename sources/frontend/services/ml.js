@@ -188,6 +188,74 @@ class MLService {
     }
 
     /**
+     * Reconocimiento de planta por imagen
+     * @param {File} imageFile - Archivo de imagen
+     * @returns {Promise} Información de la especie reconocida
+     */
+    async recognizePlant(imageFile) {
+        try {
+            const formData = new FormData();
+            formData.append('image', imageFile);
+
+            const token = apiService.getAuthToken();
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 segundos timeout
+
+            const response = await fetch(
+                API_CONFIG.BASE_URL + API_CONFIG.ML.PREDICT_RECOGNITION,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': token ? `Bearer ${token}` : ''
+                        // NO incluir 'Content-Type' - FormData lo establece automáticamente con boundary
+                    },
+                    body: formData,
+                    signal: controller.signal
+                }
+            );
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Recognition response:', data);
+
+            // El backend devuelve directamente los datos sin wrapper "success"
+            if (data.speciesName) {
+                return {
+                    success: true,
+                    recognition: {
+                        speciesName: data.speciesName,
+                        speciesId: data.speciesId,
+                        scientificName: data.speciesData?.scientificName || 'N/A',
+                        confidence: data.confidence,
+                        commonName: data.speciesData?.commonName || data.speciesName,
+                        allPredictions: data.allPredictions || [],
+                        // Datos adicionales de la especie
+                        waterRequirements: data.speciesData?.waterRequirements,
+                        lightRequirements: data.speciesData?.lightRequirements,
+                        humidityRequirements: data.speciesData?.humidityRequirements
+                    }
+                };
+            }
+
+            return { success: false, message: data.message || 'Error en reconocimiento' };
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                console.error('Request timeout');
+                return { success: false, message: 'La petición excedió el tiempo límite (30s)' };
+            }
+            console.error('Error en reconocimiento de planta:', error);
+            return { success: false, message: error.message || 'Error al procesar la imagen' };
+        }
+    }
+
+    /**
      * Modo de simulación (para desarrollo sin backend)
      * @param {string} type - Tipo de predicción
      * @param {Object} data - Datos de entrada

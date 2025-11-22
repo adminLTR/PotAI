@@ -7,23 +7,29 @@ class AuthService {
     /**
      * Iniciar sesión
      */
-    async login(email, password) {
+    async login(username, password) {
         try {
             const response = await apiService.post(API_CONFIG.AUTH.LOGIN, {
-                email,
+                username,
                 password
             });
 
-            if (response.success && response.data) {
-                // Guardar datos del usuario y token
+            // El backend devuelve directamente los datos sin response.success
+            if (response.user && response.accessToken) {
+                // Guardar datos del usuario y tokens
                 const userData = {
-                    ...response.data.user,
-                    token: response.data.token,
-                    timestamp: new Date().toISOString()
+                    id: response.user.id,
+                    username: response.user.username,
+                    email: response.user.email,
+                    isVerified: response.user.isVerified,
+                    accessToken: response.accessToken,
+                    sessionToken: response.sessionToken,
+                    expiresAt: response.expiresAt,
+                    loginAt: new Date().toISOString()
                 };
 
                 localStorage.setItem('currentUser', JSON.stringify(userData));
-                return { success: true, data: userData };
+                return { success: true, data: userData, message: response.message };
             }
 
             return { success: false, message: response.message || 'Error al iniciar sesión' };
@@ -36,10 +42,10 @@ class AuthService {
     /**
      * Registrar nuevo usuario
      */
-    async register(name, email, password) {
+    async register(username, email, password) {
         try {
             const response = await apiService.post(API_CONFIG.AUTH.REGISTER, {
-                name,
+                username,
                 email,
                 password
             });
@@ -47,7 +53,7 @@ class AuthService {
             if (response.success) {
                 // Guardar datos del registro
                 const registerData = {
-                    name,
+                    username,
                     email,
                     registeredAt: new Date().toISOString()
                 };
@@ -89,7 +95,16 @@ class AuthService {
 
         try {
             const userData = JSON.parse(user);
-            return !!userData.token;
+            // Verificar que tenga accessToken y no haya expirado
+            if (!userData.accessToken) return false;
+
+            if (userData.expiresAt) {
+                const expirationDate = new Date(userData.expiresAt);
+                const now = new Date();
+                return now < expirationDate;
+            }
+
+            return true;
         } catch (error) {
             return false;
         }

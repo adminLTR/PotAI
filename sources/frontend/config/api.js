@@ -5,7 +5,8 @@
 
 const API_CONFIG = {
     // URL base del API Gateway (punto de entrada único)
-    BASE_URL: 'http://localhost:8080',
+    // BASE_URL: 'http://localhost:8080',
+    BASE_URL: 'http://192.168.1.104:8080',
 
     // Timeout para las peticiones (en milisegundos)
     TIMEOUT: 30000,
@@ -83,7 +84,8 @@ const API_CONFIG = {
         PREDICT_HEALTH: '/ml/predict/health',
         GET_RECOMMENDATIONS: '/ml/recommendations',
         ANALYZE_CONDITIONS: '/ml/analyze/conditions',
-        PREDICT_OPTIMAL_TIME: '/ml/predict/optimal-time'
+        PREDICT_OPTIMAL_TIME: '/ml/predict/optimal-time',
+        PREDICT_RECOGNITION: '/ml/predict/recognition'
     }
 };
 

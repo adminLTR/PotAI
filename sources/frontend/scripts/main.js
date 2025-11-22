@@ -5,14 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const iniciar = document.querySelector('.iniciar-sesion');
     if (iniciar) {
         iniciar.addEventListener('click', async function () {
-            const email = document.getElementById('loginEmail');
+            const username = document.getElementById('loginUsername');
             const password = document.getElementById('loginPassword');
 
-            if (email && password) {
+            if (username && password) {
                 // Validar campos
-                if (!email.value.trim()) {
-                    alert('Por favor, ingresa tu correo electrónico');
-                    email.focus();
+                if (!username.value.trim()) {
+                    alert('Por favor, ingresa tu usuario');
+                    username.focus();
                     return;
                 }
 
@@ -22,32 +22,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(email.value)) {
-                    alert('Por favor, ingresa un correo electrónico válido');
-                    email.focus();
-                    return;
-                }
-
                 // Deshabilitar botón
                 iniciar.style.opacity = '0.6';
                 iniciar.style.pointerEvents = 'none';
 
                 try {
                     // Llamar API de autenticación
-                    const result = await authService.login(email.value, password.value);
+                    const result = await authService.login(username.value, password.value);
 
                     if (result.success) {
                         console.log('Login exitoso:', result.data);
+                        alert('✅ Inicio de sesión exitoso');
                         window.location.href = '/html/dashboard.html';
                     } else {
-                        alert(result.message || 'Error al iniciar sesión');
+                        alert('❌ Error de autenticación:\n' + (result.message || 'Error al iniciar sesión'));
                         iniciar.style.opacity = '1';
                         iniciar.style.pointerEvents = 'auto';
                     }
                 } catch (error) {
                     console.error('Error en login:', error);
-                    alert('Error al conectar con el servidor');
+                    alert('❌ Error de conexión:\n' + (error.message || 'No se pudo conectar con el servidor'));
                     iniciar.style.opacity = '1';
                     iniciar.style.pointerEvents = 'auto';
                 }
@@ -120,16 +114,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     );
 
                     if (result.success) {
-                        alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                        alert('✅ Registro exitoso\n¡Ahora puedes iniciar sesión con tu usuario!');
                         window.location.href = '../index.html';
                     } else {
-                        alert(result.message || 'Error al registrar usuario');
+                        alert('❌ Error en el registro:\n' + (result.message || 'Error al registrar usuario'));
                         registrarse.style.opacity = '1';
                         registrarse.style.pointerEvents = 'auto';
                     }
                 } catch (error) {
                     console.error('Error en registro:', error);
-                    alert('Error al conectar con el servidor');
+                    alert('❌ Error de conexión:\n' + (error.message || 'No se pudo conectar con el servidor'));
                     registrarse.style.opacity = '1';
                     registrarse.style.pointerEvents = 'auto';
                 }
@@ -241,7 +235,96 @@ function updateUserModal() {
 // ========================================
 // REGISTRAR MACETA: Integración con API
 // ========================================
+// Variable global para almacenar la imagen seleccionada
+let selectedPlantImage = null;
+
 document.addEventListener('DOMContentLoaded', function () {
+    // Manejo de carga de imagen
+    const uploadBtn = document.getElementById('uploadImageBtn');
+    const imageInput = document.getElementById('imageInput');
+    const previewImage = document.getElementById('previewImage');
+
+    if (uploadBtn && imageInput) {
+        // Click en el botón abre el explorador de archivos
+        uploadBtn.addEventListener('click', function () {
+            imageInput.click();
+        });
+
+        // Cuando se selecciona una imagen
+        imageInput.addEventListener('change', async function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validar que sea una imagen
+            if (!file.type.startsWith('image/')) {
+                alert('❌ Por favor, selecciona un archivo de imagen válido');
+                return;
+            }
+
+            // Validar tamaño (máximo 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('❌ La imagen es muy grande. Máximo 5MB');
+                return;
+            }
+
+            // Mostrar preview local
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Cambiar texto del botón
+            uploadBtn.textContent = '🔄 Procesando imagen...';
+            uploadBtn.style.pointerEvents = 'none';
+            uploadBtn.style.opacity = '0.6';
+
+            try {
+                // Enviar imagen al servicio de reconocimiento ML
+                const result = await mlService.recognizePlant(file);
+
+                if (result.success) {
+                    selectedPlantImage = file;
+                    uploadBtn.textContent = '✅ Imagen cargada';
+                    uploadBtn.style.opacity = '1';
+                    uploadBtn.style.pointerEvents = 'auto';
+
+                    // Mostrar información de la planta reconocida
+                    let infoMessage = `🌿 Planta reconocida\n\n` +
+                        `Especie: ${result.recognition.commonName || result.recognition.speciesName}\n` +
+                        `Nombre científico: ${result.recognition.scientificName}\n` +
+                        `Confianza: ${(result.recognition.confidence * 100).toFixed(1)}%`;
+
+                    // Agregar requisitos de cuidado si están disponibles
+                    if (result.recognition.waterRequirements) {
+                        infoMessage += `\n\n💧 Agua: ${result.recognition.waterRequirements}`;
+                    }
+                    if (result.recognition.lightRequirements) {
+                        infoMessage += `\n☀️ Luz: ${result.recognition.lightRequirements}`;
+                    }
+                    if (result.recognition.humidityRequirements) {
+                        infoMessage += `\n💨 Humedad: ${result.recognition.humidityRequirements}`;
+                    }
+
+                    alert(infoMessage);
+
+                    console.log('Reconocimiento completo:', result.recognition);
+                } else {
+                    uploadBtn.textContent = 'Agregar Imagen';
+                    uploadBtn.style.opacity = '1';
+                    uploadBtn.style.pointerEvents = 'auto';
+                    alert('❌ Error al reconocer la planta:\n' + result.message);
+                }
+            } catch (error) {
+                console.error('Error al procesar imagen:', error);
+                uploadBtn.textContent = 'Agregar Imagen';
+                uploadBtn.style.opacity = '1';
+                uploadBtn.style.pointerEvents = 'auto';
+                alert('❌ Error al procesar la imagen');
+            }
+        });
+    }
+
     const guardarBtn = document.querySelector('.guardar-potai');
     if (guardarBtn) {
         guardarBtn.addEventListener('click', async function () {

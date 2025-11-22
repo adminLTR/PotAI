@@ -14,9 +14,12 @@
         <p class="title-agregar-maceta">Agregar Maceta</p>
     </div>
 
-    <img src="/assets/image.svg" alt="imagen por default" class="img-default">
+    <img src="/assets/image.svg" alt="imagen por default" class="img-default" id="previewImage">
 
-    <p class="agregar-imagen-btn">Agregar Imagen</p>
+    <!-- Input de archivo oculto -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+
+    <p class="agregar-imagen-btn" id="uploadImageBtn">Agregar Imagen</p>
 
     <div class="apodo">
         <p class="label-apodo">Ingresa el apodo de tu planta</p>
