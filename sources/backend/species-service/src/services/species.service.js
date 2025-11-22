@@ -77,17 +77,34 @@ const searchSpecies = async (query) => {
     return await getAllSpecies();
   }
   
-  const species = await prisma.species.findMany({
-    where: {
-      OR: [
-        { commonName: { contains: query, mode: 'insensitive' } },
-        { scientificName: { contains: query, mode: 'insensitive' } }
-      ]
-    },
-    orderBy: { commonName: 'asc' }
+  // Búsqueda case-insensitive manual (MySQL no soporta mode en Prisma)
+  // Normalizar query: quitar espacios, acentos, pasar a minúsculas
+  const normalizeString = (str) => {
+    return str
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Quitar acentos
+      .replace(/\s+/g, ''); // Quitar espacios
+  };
+  
+  const normalizedQuery = normalizeString(query);
+  
+  // Obtener todas las especies y filtrar en memoria
+  const allSpecies = await prisma.species.findMany();
+  
+  const species = allSpecies.filter(s => {
+    const normalizedCommon = normalizeString(s.commonName);
+    const normalizedScientific = normalizeString(s.scientificName);
+    return normalizedCommon.includes(normalizedQuery) || 
+           normalizedScientific.includes(normalizedQuery);
   });
   
-  return species;
+  // Retornar el primer resultado si existe (para ML Service)
+  if (species.length > 0) {
+    return { species: species[0], total: species.length, allMatches: species };
+  }
+  
+  return { species: null, total: 0, allMatches: [] };
 };
 
 /**

@@ -25,8 +25,8 @@ SPECIES_SERVICE_URL = os.getenv('SPECIES_SERVICE_URL', 'http://species-service:3
 # Configuración del modelo de reconocimiento
 IMG_HEIGHT = 180
 IMG_WIDTH = 180
-RECOGNITION_MODEL_PATH = 'models/model-recognition.h5'
-IRRIGATION_MODEL_PATH = 'models/modelo_riego_numerico.pkl'
+RECOGNITION_MODEL_PATH = './models/model-recognition.h5'
+IRRIGATION_MODEL_PATH = './models/modelo_riego_numerico.pkl'
 
 # Clases/etiquetas del modelo (deben coincidir con Species Service)
 CLASS_NAMES = [
