@@ -5,43 +5,65 @@ const morgan = require('morgan');
 const path = require('path');
 require('dotenv').config();
 
+const mediaRoutes = require('./routes/media.routes');
+const { multerErrorHandler, errorHandler, notFoundHandler } = require('./middleware/error.middleware');
+
 const app = express();
 const PORT = process.env.PORT || 3005;
 
+// Middleware de seguridad y parseo
 app.use(helmet());
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: true
+}));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('dev'));
 
-// Servir archivos estáticos
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
-app.get('/health', (req, res) => {
-  res.json({ status: 'healthy', service: 'media-service', timestamp: new Date().toISOString() });
-});
-
+// Root endpoint
 app.get('/', (req, res) => {
   res.json({ 
     service: 'Media Service',
-    version: '1.0.0',
+    version: '2.0.0',
+    description: 'Multimedia file upload and storage service',
     endpoints: {
-      media: {
-        upload: 'POST /upload',
-        getFile: 'GET /uploads/:filename'
-      }
-    }
+      upload: {
+        multiple: 'POST /upload - Upload multiple files (max 10)',
+        single: 'POST /upload/single - Upload single file'
+      },
+      files: {
+        list: 'GET /files - List all files',
+        get: 'GET /files/:filename - Get file',
+        info: 'GET /info/:filename - Get file info',
+        delete: 'DELETE /files/:filename - Delete file'
+      },
+      health: 'GET /health - Health check'
+    },
+    limits: {
+      maxFileSize: '50MB',
+      maxFilesPerUpload: 10
+    },
+    supportedTypes: [
+      'Images: jpeg, jpg, png, gif, webp, svg',
+      'Videos: mp4, mpeg, quicktime, avi, webm',
+      'Audio: mp3, wav, webm, ogg',
+      'Documents: pdf, doc, docx, xls, xlsx',
+      'Text: txt, csv, json'
+    ]
   });
 });
 
-// TODO: Implementar upload con multer
-// const uploadRoutes = require('./routes/upload.routes');
-// app.use('/', uploadRoutes);
+// Media routes - sin prefijo porque el Gateway ya hace pathRewrite de /media -> ''
+app.use('/', mediaRoutes);
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error', message: err.message });
-});
+// Error handlers
+app.use(multerErrorHandler);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`📁 Media Service running on port ${PORT}`);
+  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📂 Upload directory: ${path.join(__dirname, '../uploads')}`);
 });
