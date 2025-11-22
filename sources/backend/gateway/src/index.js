@@ -136,7 +136,16 @@ app.use('/species', createProxyMiddleware({
 app.use('/ml', createProxyMiddleware({
   ...proxyOptions,
   target: process.env.ML_SERVICE_URL || 'http://ml-service:5000',
-  pathRewrite: { '^/ml': '' }
+  pathRewrite: { '^/ml': '' },
+  onProxyReq: (proxyReq, req, res) => {
+    // Fix para body en PUT/POST
+    if (req.body && Object.keys(req.body).length > 0) {
+      const bodyData = JSON.stringify(req.body);
+      proxyReq.setHeader('Content-Type', 'application/json');
+      proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+      proxyReq.write(bodyData);
+    }
+  }
 }));
 
 // 404 handler

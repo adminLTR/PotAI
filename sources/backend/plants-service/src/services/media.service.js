@@ -11,12 +11,14 @@ const uploadImage = async (imageFile) => {
       contentType: imageFile.mimetype
     });
     
-    const response = await axios.post(`${MEDIA_SERVICE_URL}/upload`, formData, {
+    const response = await axios.post(`${MEDIA_SERVICE_URL}/upload/single`, formData, {
       headers: formData.getHeaders(),
       timeout: 30000
     });
     
-    return response.data.url;
+    // Devolver solo la ruta relativa /uploads/filename
+    const filename = response.data.file.filename;
+    return `/uploads/${filename}`;
   } catch (error) {
     console.error('Media service error:', error.message);
     throw new Error('Failed to upload image');

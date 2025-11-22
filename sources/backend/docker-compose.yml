@@ -289,6 +289,7 @@ services:
       FLASK_ENV: development
       FLASK_APP: app.py
       PORT: 5000
+      SPECIES_SERVICE_URL: http://species-service:3006
     ports:
       - "5000:5000"
     volumes:

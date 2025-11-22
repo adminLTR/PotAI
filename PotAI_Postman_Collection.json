@@ -792,7 +792,22 @@
           }
         },
         {
-          "name": "Predict Recognition (TODO)",
+          "name": "Predict Plant Recognition",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.speciesId) {",
+                  "        pm.collectionVariables.set('species_id', response.speciesId);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [],
@@ -802,7 +817,8 @@
                 {
                   "key": "image",
                   "type": "file",
-                  "src": []
+                  "src": [],
+                  "description": "Imagen de la planta a reconocer"
                 }
               ]
             },
@@ -814,7 +830,7 @@
           }
         },
         {
-          "name": "Predict Irrigation (TODO)",
+          "name": "Predict Irrigation",
           "request": {
             "method": "POST",
             "header": [
@@ -825,7 +841,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"speciesId\": {{species_id}},\n  \"moisture\": 35.5,\n  \"temperature\": 25.0,\n  \"humidity\": 60.0,\n  \"light\": 1200.0\n}"
+              "raw": "{\n  \"speciesId\": {{species_id}},\n  \"moisture\": 25.0,\n  \"temperature\": 22.5,\n  \"humidity\": 60.0,\n  \"light\": 1200.0\n}"
             },
             "url": {
               "raw": "{{base_url}}/ml/predict/irrigation",

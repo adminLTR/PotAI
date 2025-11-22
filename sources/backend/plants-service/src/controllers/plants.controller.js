@@ -31,7 +31,7 @@ const createPlant = async (req, res, next) => {
       sessionToken
     );
     
-    res.status(201).json(result);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
