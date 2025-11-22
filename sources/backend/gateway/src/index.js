@@ -68,6 +68,8 @@ app.get('/', (req, res) => {
 const proxyOptions = {
   changeOrigin: true,
   logLevel: 'warn',
+  timeout: 30000, // 30 segundos
+  proxyTimeout: 30000,
   onError: (err, req, res) => {
     console.error('Proxy Error:', err);
     res.status(503).json({ 
@@ -80,14 +82,31 @@ const proxyOptions = {
 // Rutas de microservicios
 app.use('/auth', createProxyMiddleware({
   ...proxyOptions,
-  target: process.env.AUTH_SERVICE_URL || 'http://auth-service:3001'
-  // No reescribimos la ruta, el servicio ya maneja /auth
+  target: process.env.AUTH_SERVICE_URL || 'http://auth-service:3001',
+  onProxyReq: (proxyReq, req, res) => {
+    // Fix para body en PUT/POST
+    if (req.body && Object.keys(req.body).length > 0) {
+      const bodyData = JSON.stringify(req.body);
+      proxyReq.setHeader('Content-Type', 'application/json');
+      proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+      proxyReq.write(bodyData);
+    }
+  }
 }));
 
 app.use('/plants', createProxyMiddleware({
   ...proxyOptions,
   target: process.env.PLANTS_SERVICE_URL || 'http://plants-service:3002',
-  pathRewrite: { '^/plants': '' }
+  pathRewrite: { '^/plants': '' },
+  onProxyReq: (proxyReq, req, res) => {
+    // Fix para body en PUT/POST
+    if (req.body && Object.keys(req.body).length > 0) {
+      const bodyData = JSON.stringify(req.body);
+      proxyReq.setHeader('Content-Type', 'application/json');
+      proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+      proxyReq.write(bodyData);
+    }
+  }
 }));
 
 app.use('/pots', createProxyMiddleware({

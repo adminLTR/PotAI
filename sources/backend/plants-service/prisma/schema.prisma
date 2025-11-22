@@ -10,19 +10,32 @@ datasource db {
 }
 
 model Plant {
-  id          Int       @id @default(autoincrement())
-  userId      Int       @map("user_id")
-  potId       Int?      @map("pot_id")
-  name        String    @db.VarChar(100)
-  imageUrl    String?   @map("image_url") @db.VarChar(255)
-  speciesId   Int?      @map("species_id")
-  plantedAt   DateTime? @map("planted_at") @db.Date
-  notes       String?   @db.Text
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  id                 Int       @id @default(autoincrement())
+  userId             Int       @map("user_id")
+  potId              Int?      @map("pot_id") // Referencia al Pots Service
+  name               String    @db.VarChar(100)
+  imageUrl           String?   @map("image_url") @db.VarChar(255)
+  speciesId          Int?      @map("species_id")
+  plantedAt          DateTime? @map("planted_at") @db.Date
+  notes              String?   @db.Text
+  
+  // Datos actuales de sensores (última lectura del IoT Service)
+  temperature        Float?    @map("temperature") @db.Float
+  soilMoisture       Float?    @map("soil_moisture") @db.Float
+  lightLevel         Float?    @map("light_level") @db.Float // Nivel de luz ficticio
+  lastSensorUpdate   DateTime? @map("last_sensor_update")
+  
+  // Estado de conexión del IoT/ESP32
+  isConnected        Boolean   @default(false) @map("is_connected")
+  lastConnectionAt   DateTime? @map("last_connection_at")
+  
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
   
   @@index([userId])
   @@index([potId])
   @@index([speciesId])
   @@map("plants")
 }
+
+
