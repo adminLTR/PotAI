@@ -40,6 +40,15 @@ p {
     line-height: normal;
 }
 
+.img-default {
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 1/1;
+    border-radius: 270px;
+    margin-top: 62px;
+    margin-left: 121px;
+}
+
 .agregar-imagen-btn {
     margin-top: 12px;
     display: flex;
@@ -189,114 +198,4 @@ p {
     justify-content: center;
     flex-shrink: 0;
     padding-top: 14px;
-}
-
-/* Estilos para la imagen de preview */
-.image-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 62px;
-}
-
-.img-default {
-    width: 150px;
-    height: 150px;
-    aspect-ratio: 1/1;
-    border-radius: 75px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 3px solid #AFC3A8;
-    transition: border-color 0.3s;
-}
-
-.img-default:hover {
-    border-color: #447B51;
-}
-
-.agregar-imagen-btn {
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.agregar-imagen-btn:hover {
-    color: #2C5040;
-}
-
-/* Estilos para la planta detectada */
-.plant-detected {
-    margin-top: 20px;
-    text-align: center;
-    padding: 15px;
-    background-color: #E8F5E9;
-    border-radius: 10px;
-    margin-left: 46px;
-    margin-right: 46px;
-}
-
-.plant-detected-label {
-    color: #417357;
-    font-family: Lato;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.plant-detected-name {
-    color: #24543B;
-    font-family: Lato;
-    font-size: 22px;
-    font-weight: 800;
-    text-transform: capitalize;
-}
-
-/* Loading spinner */
-.loading-recognition {
-    margin-top: 20px;
-    text-align: center;
-    padding: 15px;
-    background-color: #FFF9C4;
-    border-radius: 10px;
-    margin-left: 46px;
-    margin-right: 46px;
-    color: #827717;
-    font-family: Lato;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* Error message */
-.error-recognition {
-    margin-top: 20px;
-    text-align: center;
-    padding: 15px;
-    background-color: #FFEBEE;
-    border-radius: 10px;
-    margin-left: 46px;
-    margin-right: 46px;
-    color: #C62828;
-    font-family: Lato;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* Input fields */
-.input-field-plant {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: #333;
-    font-family: Lato;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.48px;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.input-field-plant::placeholder {
-    color: #C9C9C9;
 }

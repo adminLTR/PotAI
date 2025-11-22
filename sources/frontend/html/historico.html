@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="historico.css">
+    <link rel="stylesheet" href="/styles/historico.css">
     <title>Historial de riego</title>
 </head>
 
@@ -61,7 +61,9 @@
                 </div>
             </div>
 
-            <div class="history-data">
+            <!-- Contenedor dinámico de datos históricos -->
+            <div class="history-data" id="historyDataContainer">
+                <!-- Los datos se cargarán dinámicamente desde la API -->
                 <div class="data-row">
                     <div class="date-cell">03/11/2025 16:00 h</div>
                     <div class="riego-cell">1504 ml</div>
@@ -103,7 +105,14 @@
         </div>
     </div>
 
+    <!-- Scripts de configuración y servicios -->
+    <script src="/config/api.js"></script>
+    <script src="/services/api.js"></script>
+    <script src="/services/auth.js"></script>
+    <script src="/services/plants.js"></script>
+    <script src="/services/ml.js"></script>
+
 </body>
-<!-- main.js no se necesita en esta página, solo tiene lógica de login/registro -->
+<script src="/scripts/main.js"></script>
 
 </html>

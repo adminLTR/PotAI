@@ -18,7 +18,7 @@ p {
     flex-shrink: 0;
     aspect-ratio: 9/10;
     margin-left: 171px;
-    margin-top: 107px;
+    margin-top: 117px;
 }
 
 .title-potai {
@@ -39,7 +39,6 @@ p {
     line-height: normal;
 }
 
-.nombres,
 .correo,
 .password {
     width: 298px;
@@ -51,29 +50,30 @@ p {
     margin-left: 46px;
     display: flex;
     align-items: center;
+    /* centra verticalmente */
     gap: 12px;
+    /* separación entre icono y texto */
     padding-left: 16px;
+    /* espacio interior izquierdo */
     box-sizing: border-box;
+    /* asegurar padding incluido en ancho */
 }
 
-.nombres {
+.correo {
     margin-top: 72px;
 }
 
-.correo,
 .password {
     margin-top: 25px;
 }
 
-.person-text,
-.correo-text,
-.password-text {
-    display: flex;
-    height: 13px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #C9C9C9;
+.correo-input,
+.password-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #292929;
     font-family: Lato;
     font-size: 16px;
     font-style: normal;
@@ -82,33 +82,9 @@ p {
     letter-spacing: 0.48px;
 }
 
-.input-field {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: #333;
-    font-family: Lato;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0.48px;
-}
-
-.input-field::placeholder {
+.correo-input::placeholder,
+.password-input::placeholder {
     color: #C9C9C9;
-}
-
-.error-message {
-    width: 298px;
-    margin-left: 46px;
-    margin-top: 15px;
-    padding: 10px;
-    background-color: #ffebee;
-    color: #c62828;
-    border-radius: 8px;
-    font-family: Lato;
-    font-size: 14px;
-    text-align: center;
 }
 
 .correo-icon {
@@ -118,27 +94,10 @@ p {
     aspect-ratio: 1/1;
 }
 
-.tyc {
+.olvidaste-contrasenia {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 46px;
-    margin-top: 25px;
-}
-
-#tyc-checkbox {
-    width: 15px;
-    height: 15px;
-    flex-shrink: 0;
-    aspect-ratio: 1/1;
-    border-radius: 1px;
-    background: #FFF;
-}
-
-#tyc-label {
-    display: flex;
-    width: 263px;
-    height: 37px;
+    width: 199px;
+    height: 18px;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
@@ -146,12 +105,14 @@ p {
     font-family: Lato;
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 400;
     line-height: normal;
     letter-spacing: 0.48px;
+    margin-top: 25px;
+    margin-left: 93px;
 }
 
-.registrarse {
+.iniciar-sesion {
     width: 298px;
     height: 60px;
     flex-shrink: 0;
@@ -162,7 +123,7 @@ p {
     cursor: pointer;
 }
 
-.registrarse-text {
+.iniciar-sesion-text {
     color: #EDF3E5;
     text-align: center;
     font-family: Lato;
@@ -178,7 +139,7 @@ p {
     padding-top: 14px;
 }
 
-.ya-tienes-cuenta {
+.crear-cuenta {
     display: flex;
     flex-direction: column;
     justify-content: center;

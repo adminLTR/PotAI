@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/registrar-macetas.css">
+    <title>Registro de Macetas</title>
+</head>
+
+<body>
+    <div class="header">
+        <img src="/assets/back.svg" alt="icono de regresar" class="back-icon" onclick="history.back()">
+        <p class="title-agregar-maceta">Agregar Maceta</p>
+    </div>
+
+    <img src="/assets/image.svg" alt="imagen por default" class="img-default">
+
+    <p class="agregar-imagen-btn">Agregar Imagen</p>
+
+    <div class="apodo">
+        <p class="label-apodo">Ingresa el apodo de tu planta</p>
+        <div class="apodo-plant">
+            <img class="apodo-plant-icon" src="/assets/plant.svg" alt="Ícono de planta">
+            <input type="text" class="apodo-plant-input" id="plantNickname" placeholder="Floripondio del cuarto"
+                required>
+        </div>
+    </div>
+
+    <div class="codigo">
+        <p class="label-codigo">Ingresa el código de tu PotAI</p>
+        <div class="codigo-maceta">
+            <img class="codigo-maceta-icon" src="/assets/flowerpot.svg" alt="Ícono de maceta">
+            <input type="text" class="codigo-maceta-input" id="potCode" placeholder="ABC123" required>
+        </div>
+    </div>
+
+    <div class="guardar-potai">
+        <p class="guardar-potai-text">Guardar</p>
+    </div>
+
+    <!-- Scripts de configuración y servicios -->
+    <script src="/config/api.js"></script>
+    <script src="/services/api.js"></script>
+    <script src="/services/auth.js"></script>
+    <script src="/services/plants.js"></script>
+</body>
+<script src="/scripts/main.js"></script>
+
+</html>

@@ -18,7 +18,7 @@ p {
     flex-shrink: 0;
     aspect-ratio: 9/10;
     margin-left: 171px;
-    margin-top: 117px;
+    margin-top: 107px;
 }
 
 .title-potai {
@@ -39,6 +39,7 @@ p {
     line-height: normal;
 }
 
+.nombres,
 .correo,
 .password {
     width: 298px;
@@ -50,38 +51,40 @@ p {
     margin-left: 46px;
     display: flex;
     align-items: center;
-    /* centra verticalmente */
     gap: 12px;
-    /* separación entre icono y texto */
     padding-left: 16px;
-    /* espacio interior izquierdo */
     box-sizing: border-box;
-    /* asegurar padding incluido en ancho */
 }
 
-.correo {
+.nombres {
     margin-top: 72px;
 }
 
+.correo,
 .password {
     margin-top: 25px;
 }
 
-.correo-text,
-.password-text {
-    display: flex;
-    width: 150px;
-    height: 13px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #C9C9C9;
+.person-input,
+.correo-input,
+.password-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #292929;
     font-family: Lato;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     letter-spacing: 0.48px;
+}
+
+.person-input::placeholder,
+.correo-input::placeholder,
+.password-input::placeholder {
+    color: #C9C9C9;
 }
 
 .correo-icon {
@@ -91,10 +94,27 @@ p {
     aspect-ratio: 1/1;
 }
 
-.olvidaste-contrasenia {
+.tyc {
     display: flex;
-    width: 199px;
-    height: 18px;
+    align-items: center;
+    gap: 10px;
+    margin-left: 46px;
+    margin-top: 25px;
+}
+
+#tyc-checkbox {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    border-radius: 1px;
+    background: #FFF;
+}
+
+#tyc-label {
+    display: flex;
+    width: 263px;
+    height: 37px;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
@@ -102,14 +122,12 @@ p {
     font-family: Lato;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: normal;
     letter-spacing: 0.48px;
-    margin-top: 25px;
-    margin-left: 93px;
 }
 
-.iniciar-sesion {
+.registrarse {
     width: 298px;
     height: 60px;
     flex-shrink: 0;
@@ -120,7 +138,7 @@ p {
     cursor: pointer;
 }
 
-.iniciar-sesion-text {
+.registrarse-text {
     color: #EDF3E5;
     text-align: center;
     font-family: Lato;
@@ -136,7 +154,7 @@ p {
     padding-top: 14px;
 }
 
-.crear-cuenta {
+.ya-tienes-cuenta {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -151,33 +169,4 @@ p {
     letter-spacing: 0.48px;
     margin-top: 25px;
     cursor: pointer;
-}
-
-.input-field {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: #333;
-    font-family: Lato;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0.48px;
-}
-
-.input-field::placeholder {
-    color: #C9C9C9;
-}
-
-.error-message {
-    width: 298px;
-    margin-left: 46px;
-    margin-top: 15px;
-    padding: 10px;
-    background-color: #ffebee;
-    color: #c62828;
-    border-radius: 8px;
-    font-family: Lato;
-    font-size: 14px;
-    text-align: center;
 }

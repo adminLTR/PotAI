@@ -4,38 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/styles/login.css">
     <title>Login</title>
 </head>
 
 <body>
-    <img src="./assets/potai-icon.png" alt="ícono de PotAI" class="potai-icon">
+    <img src="/assets/potai-icon.png" alt="ícono de PotAI" class="potai-icon">
     <h1 class="title-potai">PotAI</h1>
 
     <div class="correo">
-        <img class="correo-icon" src="./assets/correo-icon.svg" alt="Ícono de correo">
-        <input type="text" id="username-input" class="input-field" placeholder="Usuario o correo" required>
+        <img class="correo-icon" src="/assets/correo-icon.svg" alt="Ícono de correo">
+        <input type="email" class="correo-input" id="loginEmail" placeholder="Correo electrónico" required>
     </div>
 
     <div class="password">
-        <img class="password-icon" src="./assets/password.svg" alt="Ícono de contraseña">
-        <input type="password" id="password-input" class="input-field" placeholder="Contraseña" required>
+        <img class="password-icon" src="/assets/password.svg" alt="Ícono de contraseña">
+        <input type="password" class="password-input" id="loginPassword" placeholder="Contraseña" required>
     </div>
 
     <p class="olvidaste-contrasenia">¿Olvidaste tu contraseña?</p>
 
-    <div id="error-message" class="error-message" style="display: none;"></div>
-
-    <div class="iniciar-sesion" id="login-btn">
+    <div class="iniciar-sesion">
         <p class="iniciar-sesion-text">Iniciar sesión</p>
     </div>
 
     <p class="crear-cuenta">
         Crear una cuenta
     </p>
-    <script src="js/config.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="main.js"></script>
+
+    <!-- Scripts de configuración y servicios -->
+    <script src="/config/api.js"></script>
+    <script src="/services/api.js"></script>
+    <script src="/services/auth.js"></script>
+    <script src="/scripts/main.js"></script>
 </body>
 
 </html>
