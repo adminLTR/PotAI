@@ -14,7 +14,7 @@ const createPlant = async (req, res, next) => {
     const plantData = {
       name: req.body.name,
       potLabel: req.body.potLabel,
-      speciesName: req.body.speciesName,
+      speciesId: req.body.speciesId ? parseInt(req.body.speciesId) : null,
       plantedAt: req.body.plantedAt,
       notes: req.body.notes
     };

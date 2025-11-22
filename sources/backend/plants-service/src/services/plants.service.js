@@ -8,7 +8,7 @@ const {
 } = require('../utils/errors');
 
 const { uploadImage } = require('./media.service');
-const { findSpeciesByName, getSpeciesById } = require('./species.service');
+const { getSpeciesById } = require('./species.service');
 const { getOrCreatePot, getPotById } = require('./pots.service');
 const { getEnvironmentalData, getWateringLogs } = require('./iot.service');
 
@@ -16,7 +16,7 @@ const { getEnvironmentalData, getWateringLogs } = require('./iot.service');
  * Crear nueva planta con imagen y relaciones
  */
 const createPlant = async (userId, plantData, imageFile, accessToken, sessionToken) => {
-  const { name, potLabel, speciesName, plantedAt, notes } = plantData;
+  const { name, potLabel, speciesId, plantedAt, notes } = plantData;
   
   if (!name) {
     throw new BadRequestError('Plant name is required');
@@ -28,7 +28,6 @@ const createPlant = async (userId, plantData, imageFile, accessToken, sessionTok
   
   let imageUrl = null;
   let potId = null;
-  let speciesId = null;
   let potData = null;
   let speciesData = null;
   
@@ -51,11 +50,13 @@ const createPlant = async (userId, plantData, imageFile, accessToken, sessionTok
     throw new BadRequestError('Failed to associate pot');
   }
   
-  // 3. Buscar especie si se proporcionó
-  if (speciesName) {
-    speciesData = await findSpeciesByName(speciesName);
-    if (speciesData) {
-      speciesId = speciesData.id;
+  // 3. Obtener datos de especie si se proporcionó speciesId
+  if (speciesId) {
+    try {
+      speciesData = await getSpeciesById(speciesId);
+    } catch (error) {
+      console.error('Failed to get species:', error.message);
+      // Continuar sin especie
     }
   }
   

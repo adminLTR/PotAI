@@ -1,0 +1,840 @@
+{
+  "info": {
+    "name": "PotAI - Smart Pot System",
+    "description": "Colección completa de endpoints para el sistema de maceteros inteligentes PotAI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "session_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "plant_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "pot_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "species_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Auth Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth/health",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "health"]
+            }
+          }
+        },
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('user_id', response.user.id);",
+                  "    pm.collectionVariables.set('access_token', response.accessToken);",
+                  "    pm.collectionVariables.set('session_token', response.sessionToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@potai.com\",\n  \"password\": \"Test123!\",\n  \"name\": \"Usuario Test\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('user_id', response.user.id);",
+                  "    pm.collectionVariables.set('access_token', response.accessToken);",
+                  "    pm.collectionVariables.set('session_token', response.sessionToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@potai.com\",\n  \"password\": \"Test123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Species Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/species/health",
+              "host": ["{{base_url}}"],
+              "path": ["species", "health"]
+            }
+          }
+        },
+        {
+          "name": "Get All Species",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.species && response.species.length > 0) {",
+                  "        pm.collectionVariables.set('species_id', response.species[0].id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/species",
+              "host": ["{{base_url}}"],
+              "path": ["species"]
+            }
+          }
+        },
+        {
+          "name": "Search Species",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/species/search?q=rosa",
+              "host": ["{{base_url}}"],
+              "path": ["species", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "rosa"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Species by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/species/{{species_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["species", "{{species_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Pots Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/pots/health",
+              "host": ["{{base_url}}"],
+              "path": ["pots", "health"]
+            }
+          }
+        },
+        {
+          "name": "Create Pot",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('pot_id', response.pot.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"ESP32_TEST_001\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pots",
+              "host": ["{{base_url}}"],
+              "path": ["pots"]
+            }
+          }
+        },
+        {
+          "name": "Get All Pots",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pots",
+              "host": ["{{base_url}}"],
+              "path": ["pots"]
+            }
+          }
+        },
+        {
+          "name": "Get Pot by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/pots/{{pot_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["pots", "{{pot_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get or Create Pot",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('pot_id', response.pot.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"ESP32_TEST_001\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/pots/get-or-create",
+              "host": ["{{base_url}}"],
+              "path": ["pots", "get-or-create"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Media Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/media/health",
+              "host": ["{{base_url}}"],
+              "path": ["media", "health"]
+            }
+          }
+        },
+        {
+          "name": "Upload Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/media/upload",
+              "host": ["{{base_url}}"],
+              "path": ["media", "upload"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Plants Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/plants/health",
+              "host": ["{{base_url}}"],
+              "path": ["plants", "health"]
+            }
+          }
+        },
+        {
+          "name": "Create Plant (with Image)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('plant_id', response.plant.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Mi Rosa China",
+                  "type": "text"
+                },
+                {
+                  "key": "potLabel",
+                  "value": "ESP32_TEST_001",
+                  "type": "text"
+                },
+                {
+                  "key": "speciesId",
+                  "value": "{{species_id}}",
+                  "type": "text",
+                  "description": "ID de la especie (ej: 7 para Rosa China)"
+                },
+                {
+                  "key": "plantedAt",
+                  "value": "2025-11-21",
+                  "type": "text"
+                },
+                {
+                  "key": "notes",
+                  "value": "Planta de prueba para el sistema",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": [],
+                  "description": "Imagen de la planta"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/plants",
+              "host": ["{{base_url}}"],
+              "path": ["plants"]
+            }
+          }
+        },
+        {
+          "name": "Get All Plants",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/plants?limit=10&offset=0",
+              "host": ["{{base_url}}"],
+              "path": ["plants"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Plant by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/plants/{{plant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["plants", "{{plant_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Plant",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Mi Rosa China Actualizada\",\n  \"notes\": \"Notas actualizadas\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/plants/{{plant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["plants", "{{plant_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Plant",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/plants/{{plant_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["plants", "{{plant_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Plants by Pot ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/plants/pot/{{pot_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["plants", "pot", "{{pot_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. IoT Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/iot/health",
+              "host": ["{{base_url}}"],
+              "path": ["iot", "health"]
+            }
+          }
+        },
+        {
+          "name": "Send Sensor Data (ESP32 Simulation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plantId\": {{plant_id}},\n  \"temperature\": 25.5,\n  \"humidity\": 65.0,\n  \"moisture\": 28.0,\n  \"light\": 1200.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/iot/sensor-data",
+              "host": ["{{base_url}}"],
+              "path": ["iot", "sensor-data"]
+            }
+          }
+        },
+        {
+          "name": "Get Plant Conditions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/iot/plants/{{plant_id}}/conditions?limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["iot", "plants", "{{plant_id}}", "conditions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Latest Condition",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/iot/plants/{{plant_id}}/latest",
+              "host": ["{{base_url}}"],
+              "path": ["iot", "plants", "{{plant_id}}", "latest"]
+            }
+          }
+        },
+        {
+          "name": "Get Watering Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "x-session-token",
+                "value": "{{session_token}}"
+              },
+              {
+                "key": "x-user-id",
+                "value": "{{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/iot/plants/{{plant_id}}/watering-logs?limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["iot", "plants", "{{plant_id}}", "watering-logs"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. ML Service",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/ml/health",
+              "host": ["{{base_url}}"],
+              "path": ["ml", "health"]
+            }
+          }
+        },
+        {
+          "name": "Predict Recognition (TODO)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/ml/predict/recognition",
+              "host": ["{{base_url}}"],
+              "path": ["ml", "predict", "recognition"]
+            }
+          }
+        },
+        {
+          "name": "Predict Irrigation (TODO)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"speciesId\": {{species_id}},\n  \"moisture\": 35.5,\n  \"temperature\": 25.0,\n  \"humidity\": 60.0,\n  \"light\": 1200.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ml/predict/irrigation",
+              "host": ["{{base_url}}"],
+              "path": ["ml", "predict", "irrigation"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
